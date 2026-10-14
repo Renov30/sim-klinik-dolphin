@@ -1,0 +1,172 @@
+// Prisma Schema for Dolphin e-Clinic
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  PENDAFTARAN
+  KASIR
+}
+
+enum Gender {
+  L
+  P
+}
+
+enum MovementType {
+  IN
+  OUT
+  SALE
+  ADJUSTMENT
+}
+
+enum PaymentMethod {
+  TUNAI
+  TRANSFER
+  QRIS
+}
+
+model User {
+  id             String          @id @default(cuid())
+  username       String          @unique
+  password       String
+  name           String
+  role           Role            @default(KASIR)
+  isActive       Boolean         @default(true)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  sales          Sale[]
+  stockMovements StockMovement[]
+
+  @@map("users")
+}
+
+model Patient {
+  id        String   @id @default(cuid())
+  mrNumber  String   @unique // Nomor Rekam Medis (auto generated e.g. RM-2610-0001)
+  nik       String?  @unique
+  name      String
+  gender    Gender   @default(L)
+  birthDate DateTime
+  phone     String?
+  address   String?
+  bloodType String? // A, B, AB, O
+  allergy   String? // Riwayat Alergi Obat / Makanan
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sales     Sale[]
+
+  @@index([name])
+  @@index([mrNumber])
+  @@map("patients")
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  medicines   Medicine[]
+
+  @@map("categories")
+}
+
+model Medicine {
+  id             String          @id @default(cuid())
+  code           String          @unique // e.g. OBT-001
+  name           String
+  categoryId     String
+  category       Category        @relation(fields: [categoryId], references: [id])
+  unit           String          @default("Tablet") // Tablet, Strip, Botol, Kapsul, Tube, Ampul, Sachet
+  buyPrice       Float           @default(0)
+  sellPrice      Float
+  stock          Int             @default(0)
+  minStock       Int             @default(5)
+  location       String? // e.g. Rak A-01
+  isActive       Boolean         @default(true)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  saleItems      SaleItem[]
+  stockMovements StockMovement[]
+
+  @@index([name])
+  @@index([code])
+  @@map("medicines")
+}
+
+model StockMovement {
+  id            String       @id @default(cuid())
+  medicineId    String
+  medicine      Medicine     @relation(fields: [medicineId], references: [id], onDelete: Cascade)
+  type          MovementType
+  quantity      Int // Jumlah perubahan (positif atau negatif)
+  balanceBefore Int
+  balanceAfter  Int
+  referenceNo   String? // No Faktur atau No Transaksi / Catatan
+  notes         String?
+  createdById   String?
+  createdBy     User?        @relation(fields: [createdById], references: [id])
+  createdAt     DateTime     @default(now())
+
+  @@index([medicineId])
+  @@map("stock_movements")
+}
+
+model Sale {
+  id            String        @id @default(cuid())
+  invoiceNumber String        @unique // e.g. INV-20261014-0001
+  patientId     String?
+  patient       Patient?      @relation(fields: [patientId], references: [id])
+  customerName  String // Nama pasien atau "Pasien Umum"
+  subtotal      Float
+  discount      Float         @default(0)
+  totalAmount   Float
+  payAmount     Float
+  changeAmount  Float
+  paymentMethod PaymentMethod @default(TUNAI)
+  notes         String?
+  cashierId     String
+  cashier       User          @relation(fields: [cashierId], references: [id])
+  items         SaleItem[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([invoiceNumber])
+  @@index([createdAt])
+  @@map("sales")
+}
+
+model SaleItem {
+  id           String   @id @default(cuid())
+  saleId       String
+  sale         Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  medicineId   String
+  medicine     Medicine @relation(fields: [medicineId], references: [id])
+  medicineName String
+  unit         String
+  unitPrice    Float
+  quantity     Int
+  subtotal     Float
+
+  @@map("sale_items")
+}
+
+model ClinicSetting {
+  id            String   @id @default("clinic-settings")
+  name          String   @default("Dolphin e-Clinic")
+  tagline       String   @default("Sistem Informasi Manajemen Klinik Terpadu")
+  address       String   @default("Jl. Kesehatan Raya No. 12, Jakarta")
+  phone         String   @default("021-555-1234")
+  email         String   @default("kontak@dolphineclinic.id")
+  receiptFooter String   @default("Semoga Lekas Sembuh & Terima Kasih Atas Kunjungan Anda")
+  updatedAt     DateTime @updatedAt
+
+  @@map("clinic_settings")
+}

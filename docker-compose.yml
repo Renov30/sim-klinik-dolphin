@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: dolphin_clinic_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-klinik_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-klinik_secret_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-dolphin_eclinic}
+    ports:
+      - "5432:5432"
+    volumes:
+      - dolphin_clinic_pgdata:/var/lib/postgresql/data
+      - ./scripts/backup-db.sh:/usr/local/bin/backup-db.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-klinik_user} -d ${POSTGRES_DB:-dolphin_eclinic}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dolphin_clinic_app
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:${APP_PORT:-3001}:3000"
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-klinik_user}:${POSTGRES_PASSWORD:-klinik_secret_pass}@postgres:5432/${POSTGRES_DB:-dolphin_eclinic}?schema=public
+      NEXT_PUBLIC_CLINIC_NAME: ${NEXT_PUBLIC_CLINIC_NAME:-Dolphin e-Clinic}
+      NEXT_PUBLIC_CLINIC_TAGLINE: ${NEXT_PUBLIC_CLINIC_TAGLINE:-Sistem Informasi Manajemen Klinik Terpadu}
+      JWT_SECRET: ${JWT_SECRET:-dolphin-eclinic-jwt-secret-key-32chars-min-secure-2026}
+      PORT: 3000
+      HOSTNAME: "0.0.0.0"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  dolphin_clinic_pgdata:
+    name: dolphin_clinic_pgdata
+

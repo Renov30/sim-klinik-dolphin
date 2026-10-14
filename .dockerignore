@@ -1,0 +1,8 @@
+node_modules
+.next
+.git
+.gitignore
+backups
+*.log
+.DS_Store
+
