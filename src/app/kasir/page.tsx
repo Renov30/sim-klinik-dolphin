@@ -322,16 +322,16 @@ function KasirContent() {
         <main className="flex-1 p-6 lg:p-8 space-y-6 overflow-y-auto">
           {/* Error Alert */}
           {errorMessage && (
-            <div className="p-4 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-sm font-mono flex items-center justify-between shadow-xs">
+            <div className="p-4 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-sm flex items-center justify-between shadow-xs">
               <div className="flex items-center gap-2">
-                <span className="font-bold">[PERINGATAN STOK / KASIR]</span>
+                <span className="font-bold">Peringatan:</span>
                 <span>{errorMessage}</span>
               </div>
               <button
                 onClick={() => setErrorMessage('')}
                 className="text-xs text-rose-600 hover:text-rose-900 font-bold"
               >
-                [X]
+                Tutup
               </button>
             </div>
           )}
@@ -342,7 +342,7 @@ function KasirContent() {
               <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm">
                 <div className="flex items-center justify-between gap-4 mb-3">
                   <div className="flex-1">
-                    <label className="block text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider mb-1">
+                    <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
                       Cari Obat untuk Ditambahkan
                     </label>
                     <input
@@ -361,26 +361,26 @@ function KasirContent() {
                       setSearchMed('');
                       loadMedicines('');
                     }}
-                    className="mt-5 px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono font-bold"
+                    className="mt-5 px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold"
                   >
-                    [Reset]
+                    Reset
                   </button>
                 </div>
-                <div className="flex items-center justify-between text-xs font-mono text-slate-500">
+                <div className="flex items-center justify-between text-xs text-slate-500">
                   <span>Daftar Obat Siap Jual</span>
-                  <span>Klik tombol <strong>[+ Keranjang]</strong> untuk memilih</span>
+                  <span>Klik tombol <strong>+ Keranjang</strong> untuk memilih</span>
                 </div>
               </div>
 
               {/* Medicine Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[600px] overflow-y-auto pr-1">
                 {loadingMed ? (
-                  <div className="col-span-2 p-12 text-center text-slate-400 font-mono text-xs">
-                    [Memuat katalog obat...]
+                  <div className="col-span-2 p-12 text-center text-slate-400 text-sm">
+                    Memuat katalog obat...
                   </div>
                 ) : medicines.length === 0 ? (
-                  <div className="col-span-2 p-12 text-center text-slate-400 font-mono text-xs bg-white rounded-2xl border border-slate-200">
-                    [Tidak ada obat yang cocok dengan pencarian]
+                  <div className="col-span-2 p-12 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">
+                    Tidak ada obat yang cocok dengan pencarian
                   </div>
                 ) : (
                   medicines.map((m) => {
@@ -397,11 +397,11 @@ function KasirContent() {
                       >
                         <div>
                           <div className="flex items-center justify-between mb-1.5">
-                            <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+                            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
                               {m.code}
                             </span>
                             <span
-                              className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                              className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                                 isOutOfStock
                                   ? 'bg-rose-100 text-rose-800'
                                   : m.stock <= m.minStock
@@ -413,19 +413,19 @@ function KasirContent() {
                             </span>
                           </div>
                           <h4 className="font-bold text-slate-800 text-sm">{m.name}</h4>
-                          <p className="text-[11px] font-mono text-slate-500 mt-0.5">
+                          <p className="text-xs text-slate-500 mt-0.5">
                             {m.category?.name || 'Umum'} • Satuan: {m.unit}
                           </p>
                         </div>
 
                         <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
-                          <span className="font-mono font-black text-slate-900 text-sm">
+                          <span className="font-bold text-slate-900 text-sm">
                             {formatRupiah(m.sellPrice)}
                           </span>
                           <button
                             disabled={isOutOfStock}
                             onClick={() => addToCart(m)}
-                            className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold transition cursor-pointer ${
+                            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                               isOutOfStock
                                 ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                                 : inCart
@@ -433,7 +433,7 @@ function KasirContent() {
                                 : 'bg-blue-600 hover:bg-blue-700 text-white shadow-xs'
                             }`}
                           >
-                            {inCart ? `[+ (${inCart.quantity})]` : '[+ Keranjang]'}
+                            {inCart ? `+ (${inCart.quantity})` : '+ Keranjang'}
                           </button>
                         </div>
                       </div>
@@ -449,16 +449,16 @@ function KasirContent() {
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div>
                   <h3 className="font-bold text-slate-800 text-base">Keranjang Belanja</h3>
-                  <p className="text-xs text-slate-500 font-mono mt-0.5">
+                  <p className="text-xs text-slate-500 mt-0.5">
                     {cart.length} Jenis Item Terpilih
                   </p>
                 </div>
                 {cart.length > 0 && (
                   <button
                     onClick={clearCart}
-                    className="text-xs font-mono font-bold text-rose-600 hover:text-rose-800"
+                    className="text-xs font-semibold text-rose-600 hover:text-rose-800"
                   >
-                    [Kosongkan]
+                    Kosongkan
                   </button>
                 )}
               </div>
@@ -466,10 +466,10 @@ function KasirContent() {
               {/* Data Pelanggan / Pasien */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-slate-700 uppercase">
+                  <span className="text-xs font-semibold text-slate-700 uppercase">
                     Data Pasien / Pembeli
                   </span>
-                  <div className="flex items-center gap-2 text-xs font-mono">
+                  <div className="flex items-center gap-2 text-xs">
                     <label className="flex items-center gap-1.5 cursor-pointer">
                       <input
                         type="checkbox"
@@ -500,7 +500,7 @@ function KasirContent() {
                       }}
                       onFocus={() => setShowPatientDropdown(true)}
                       placeholder="Cari No. RM atau nama pasien..."
-                      className="w-full px-3 py-2 text-xs font-mono rounded-lg border border-slate-300 bg-white"
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white"
                     />
 
                     {showPatientDropdown && patientList.length > 0 && (
@@ -512,10 +512,10 @@ function KasirContent() {
                             className="p-2.5 text-xs hover:bg-blue-50 cursor-pointer"
                           >
                             <p className="font-bold text-slate-800">
-                              {p.name} <span className="text-blue-700 font-mono">({p.mrNumber})</span>
+                              {p.name} <span className="text-blue-700 font-semibold">({p.mrNumber})</span>
                             </p>
                             {p.allergy && (
-                              <p className="text-[10px] text-rose-600 font-mono mt-0.5">
+                              <p className="text-xs text-rose-600 mt-0.5">
                                 Alergi: {p.allergy}
                               </p>
                             )}
@@ -528,13 +528,13 @@ function KasirContent() {
                       <div className="mt-2 p-2.5 rounded-lg bg-blue-50/80 border border-blue-200 text-xs">
                         <div className="flex items-center justify-between">
                           <span className="font-bold text-blue-900">{selectedPatient.name}</span>
-                          <span className="font-mono text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded">
+                          <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded font-semibold">
                             {selectedPatient.mrNumber}
                           </span>
                         </div>
                         {selectedPatient.allergy && (
-                          <div className="mt-1 p-1.5 rounded bg-rose-100 border border-rose-300 text-[11px] font-mono text-rose-800 font-bold">
-                            [PERINGATAN ALERGI] {selectedPatient.allergy}
+                          <div className="mt-1 p-1.5 rounded bg-rose-100 border border-rose-300 text-xs text-rose-800 font-semibold">
+                            Peringatan Alergi: {selectedPatient.allergy}
                           </div>
                         )}
                       </div>
@@ -556,8 +556,8 @@ function KasirContent() {
               {/* Daftar Item Cart */}
               <div className="space-y-2.5 max-h-64 overflow-y-auto pr-1">
                 {cart.length === 0 ? (
-                  <div className="p-8 text-center text-xs font-mono text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
-                    [Keranjang masih kosong. Pilih obat dari katalog di sebelah kiri]
+                  <div className="p-8 text-center text-xs text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                    Keranjang masih kosong. Pilih obat dari katalog di sebelah kiri.
                   </div>
                 ) : (
                   cart.map((item) => (
@@ -567,14 +567,14 @@ function KasirContent() {
                     >
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] font-mono text-blue-700 font-bold">
+                          <span className="text-xs text-blue-700 font-semibold">
                             {item.code}
                           </span>
                           <h5 className="font-bold text-slate-800 text-xs truncate">
                             {item.name}
                           </h5>
                         </div>
-                        <p className="text-[11px] font-mono text-slate-500 mt-0.5">
+                        <p className="text-xs text-slate-500 mt-0.5">
                           {formatRupiah(item.sellPrice)} / {item.unit}
                         </p>
                       </div>
@@ -584,7 +584,7 @@ function KasirContent() {
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.medicineId, item.quantity - 1)}
-                          className="w-7 h-7 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-mono font-bold text-xs"
+                          className="w-7 h-7 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs"
                         >
                           -
                         </button>
@@ -596,27 +596,27 @@ function KasirContent() {
                           onChange={(e) =>
                             updateQuantity(item.medicineId, parseInt(e.target.value, 10) || 1)
                           }
-                          className="w-12 h-7 text-center rounded-lg border border-slate-300 font-mono font-bold text-xs bg-white"
+                          className="w-12 h-7 text-center rounded-lg border border-slate-300 font-semibold text-xs bg-white"
                         />
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.medicineId, item.quantity + 1)}
-                          className="w-7 h-7 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-mono font-bold text-xs"
+                          className="w-7 h-7 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs"
                         >
                           +
                         </button>
                       </div>
 
                       <div className="text-right shrink-0 min-w-16">
-                        <p className="font-mono font-bold text-slate-900 text-xs">
+                        <p className="font-bold text-slate-900 text-xs">
                           {formatRupiah(item.sellPrice * item.quantity)}
                         </p>
                         <button
                           type="button"
                           onClick={() => removeFromCart(item.medicineId)}
-                          className="text-[10px] font-mono text-rose-600 hover:text-rose-800"
+                          className="text-xs text-rose-600 hover:text-rose-800 font-medium"
                         >
-                          [Hapus]
+                          Hapus
                         </button>
                       </div>
                     </div>
@@ -625,7 +625,7 @@ function KasirContent() {
               </div>
 
               {/* Rincian Total & Pembayaran */}
-              <div className="pt-3 border-t border-slate-200 space-y-2.5 text-xs font-mono">
+              <div className="pt-3 border-t border-slate-200 space-y-2.5 text-xs">
                 <div className="flex items-center justify-between text-slate-600">
                   <span>Subtotal:</span>
                   <span className="font-bold text-slate-800">{formatRupiah(subtotal)}</span>
@@ -638,13 +638,13 @@ function KasirContent() {
                     min="0"
                     value={discount}
                     onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)}
-                    className="w-28 px-2 py-1 text-right rounded-lg border border-slate-300 font-mono text-xs"
+                    className="w-28 px-2 py-1 text-right rounded-lg border border-slate-300 font-semibold text-xs"
                   />
                 </div>
 
                 <div className="flex items-center justify-between p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-950">
                   <span className="font-bold text-sm uppercase">Total Tagihan:</span>
-                  <span className="font-black text-xl font-mono text-blue-700">
+                  <span className="font-bold text-xl text-blue-700">
                     {formatRupiah(totalAmount)}
                   </span>
                 </div>
@@ -663,7 +663,7 @@ function KasirContent() {
                           setPaymentMethod(method);
                           if (method !== 'TUNAI') setPayAmount(totalAmount);
                         }}
-                        className={`py-1.5 px-2 rounded-xl text-center font-mono font-bold transition border ${
+                        className={`py-1.5 px-2 rounded-xl text-center font-semibold text-xs transition border ${
                           paymentMethod === method
                             ? 'bg-blue-600 text-white border-blue-700'
                             : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
@@ -685,9 +685,9 @@ function KasirContent() {
                       <button
                         type="button"
                         onClick={() => handlePresetPay('PAS')}
-                        className="text-[10px] text-blue-600 font-bold hover:underline"
+                        className="text-xs text-blue-600 font-semibold hover:underline"
                       >
-                        [Uang Pas]
+                        Uang Pas
                       </button>
                     </div>
                     <input
@@ -696,7 +696,7 @@ function KasirContent() {
                       value={payAmount || ''}
                       onChange={(e) => setPayAmount(parseFloat(e.target.value) || 0)}
                       placeholder="Masukkan nominal bayar..."
-                      className="w-full px-3 py-2 text-base font-bold font-mono rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-slate-800"
+                      className="w-full px-3 py-2 text-base font-bold rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-slate-800"
                     />
 
                     {/* Quick presets */}
@@ -706,7 +706,7 @@ function KasirContent() {
                           key={preset}
                           type="button"
                           onClick={() => handlePresetPay(preset)}
-                          className="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-mono font-semibold"
+                          className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold"
                         >
                           {preset / 1000}k
                         </button>
@@ -714,9 +714,9 @@ function KasirContent() {
                     </div>
 
                     {/* Kembalian */}
-                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-mono">
+                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900">
                       <span>Kembalian:</span>
-                      <strong className="text-sm font-black text-emerald-700">
+                      <strong className="text-sm font-bold text-emerald-700">
                         {formatRupiah(changeAmount)}
                       </strong>
                     </div>
@@ -732,7 +732,7 @@ function KasirContent() {
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Contoh: Pembelian obat bebas tanpa resep"
-                    className="w-full px-3 py-1.5 text-xs rounded-xl border border-slate-300 font-sans"
+                    className="w-full px-3 py-1.5 text-xs rounded-xl border border-slate-300"
                   />
                 </div>
               </div>
@@ -742,81 +742,81 @@ function KasirContent() {
                 type="button"
                 disabled={processing || cart.length === 0}
                 onClick={handleCheckout}
-                className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm tracking-wide shadow-md transition font-mono disabled:opacity-50 cursor-pointer"
+                className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm tracking-wide shadow-sm transition disabled:opacity-50 cursor-pointer"
               >
-                {processing ? '[Memproses Transaksi...]' : '[✓ Proses Pembayaran & Cetak Struk]'}
+                {processing ? 'Memproses Transaksi...' : 'Proses Pembayaran & Cetak Struk'}
               </button>
             </div>
           </div>
         </main>
       </div>
 
-      {/* MODAL CETAK STRUK THERMAL / RECEIPT (Tampilan Struk Resmi Kasir Farmasi) */}
+      {/* MODAL CETAK STRUK THERMAL / RECEIPT */}
       {showReceiptModal && receiptData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs no-print">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 max-h-[95vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-              <h3 className="text-base font-bold text-slate-800 font-mono">
-                [STRUK PEMBAYARAN KASIR]
+              <h3 className="text-base font-bold text-slate-800">
+                Struk Pembayaran Kasir
               </h3>
               <button
                 onClick={() => setShowReceiptModal(false)}
-                className="text-slate-400 hover:text-slate-700 font-mono text-sm px-2 py-1 rounded bg-slate-100"
+                className="text-slate-500 hover:text-slate-800 text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200"
               >
-                [X]
+                Tutup
               </button>
             </div>
 
             {/* AREA CETAK STRUK / PRINTABLE AREA */}
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-800 printable-area">
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 printable-area">
               {/* Header Struk */}
               <div className="text-center pb-3 border-b border-dashed border-slate-300">
-                <h2 className="text-base font-black tracking-tight">{receiptData.clinic.name}</h2>
-                <p className="text-[10px] text-slate-600">{receiptData.clinic.address}</p>
-                <p className="text-[10px] text-slate-600">Telp: {receiptData.clinic.phone}</p>
+                <h2 className="text-base font-bold tracking-tight">{receiptData.clinic.name}</h2>
+                <p className="text-xs text-slate-600">{receiptData.clinic.address}</p>
+                <p className="text-xs text-slate-600">Telp: {receiptData.clinic.phone}</p>
               </div>
 
               {/* Info Faktur */}
-              <div className="py-2.5 border-b border-dashed border-slate-300 text-[11px] space-y-1">
+              <div className="py-2.5 border-b border-dashed border-slate-300 text-xs space-y-1">
                 <div className="flex justify-between">
-                  <span>No. Faktur:</span>
-                  <span className="font-bold">{receiptData.invoiceNumber}</span>
+                  <span className="text-slate-600">No. Faktur:</span>
+                  <span className="font-semibold">{receiptData.invoiceNumber}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Waktu:</span>
+                  <span className="text-slate-600">Waktu:</span>
                   <span>{formatDateTimeIndo(receiptData.createdAt)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Kasir:</span>
+                  <span className="text-slate-600">Kasir:</span>
                   <span>{receiptData.cashier.name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Pasien / Pelanggan:</span>
-                  <span className="font-bold">{receiptData.customerName}</span>
+                  <span className="text-slate-600">Pasien / Pelanggan:</span>
+                  <span className="font-semibold">{receiptData.customerName}</span>
                 </div>
               </div>
 
               {/* Rincian Item Obat */}
               <div className="py-2.5 border-b border-dashed border-slate-300">
-                <div className="grid grid-cols-12 font-bold text-[10px] pb-1 border-b border-slate-200 uppercase">
+                <div className="grid grid-cols-12 font-semibold text-[11px] pb-1 border-b border-slate-200 uppercase text-slate-600">
                   <span className="col-span-6">Nama Obat</span>
                   <span className="col-span-2 text-center">Qty</span>
                   <span className="col-span-4 text-right">Subtotal</span>
                 </div>
 
-                <div className="divide-y divide-slate-100 pt-1 text-[11px]">
+                <div className="divide-y divide-slate-100 pt-1 text-xs">
                   {receiptData.items.map((item, idx) => (
                     <div key={idx} className="py-1.5 grid grid-cols-12 items-center">
                       <div className="col-span-6 leading-tight">
-                        <span className="font-bold block">{item.medicineName}</span>
-                        <span className="text-[10px] text-slate-500">
+                        <span className="font-semibold block">{item.medicineName}</span>
+                        <span className="text-[11px] text-slate-500">
                           @{formatRupiah(item.unitPrice)}
                         </span>
                       </div>
-                      <span className="col-span-2 text-center font-bold">
+                      <span className="col-span-2 text-center font-medium">
                         {item.quantity} {item.unit}
                       </span>
-                      <span className="col-span-4 text-right font-bold">
+                      <span className="col-span-4 text-right font-semibold">
                         {formatRupiah(item.subtotal)}
                       </span>
                     </div>
@@ -825,9 +825,9 @@ function KasirContent() {
               </div>
 
               {/* Total & Kembalian */}
-              <div className="py-2.5 border-b border-dashed border-slate-300 text-[11px] space-y-1">
+              <div className="py-2.5 border-b border-dashed border-slate-300 text-xs space-y-1">
                 <div className="flex justify-between">
-                  <span>Subtotal:</span>
+                  <span className="text-slate-600">Subtotal:</span>
                   <span>{formatRupiah(receiptData.subtotal)}</span>
                 </div>
                 {receiptData.discount > 0 && (
@@ -838,10 +838,10 @@ function KasirContent() {
                 )}
                 <div className="flex justify-between font-bold text-sm pt-1 border-t border-slate-200">
                   <span>TOTAL:</span>
-                  <span className="text-blue-900">{formatRupiah(receiptData.totalAmount)}</span>
+                  <span className="text-blue-700">{formatRupiah(receiptData.totalAmount)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Bayar ({receiptData.paymentMethod}):</span>
+                  <span className="text-slate-600">Bayar ({receiptData.paymentMethod}):</span>
                   <span>{formatRupiah(receiptData.payAmount)}</span>
                 </div>
                 <div className="flex justify-between font-bold">
@@ -851,9 +851,9 @@ function KasirContent() {
               </div>
 
               {/* Footer Catatan Struk */}
-              <div className="pt-3 text-center text-[10px] text-slate-500 leading-tight">
+              <div className="pt-3 text-center text-xs text-slate-500 leading-tight">
                 <p>{receiptData.clinic.receiptFooter}</p>
-                <p className="mt-1 font-mono text-[9px]">=== SIM KLINIK DOLPHIN E-CLINIC ===</p>
+                <p className="mt-1 text-[11px] text-slate-400">SIM KLINIK DOLPHIN E-CLINIC</p>
               </div>
             </div>
 
@@ -862,16 +862,16 @@ function KasirContent() {
               <button
                 type="button"
                 onClick={() => setShowReceiptModal(false)}
-                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono font-bold"
+                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold"
               >
-                [Selesai & Tutup]
+                Selesai & Tutup
               </button>
               <button
                 type="button"
                 onClick={handlePrint}
-                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-mono font-bold tracking-wide shadow transition"
+                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold tracking-wide shadow transition"
               >
-                [🖨 Cetak Struk (Print)]
+                Cetak Struk
               </button>
             </div>
           </div>
@@ -883,7 +883,7 @@ function KasirContent() {
 
 export default function KasirPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center font-mono text-xs">Memuat Kasir...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-sm text-slate-500">Memuat Kasir...</div>}>
       <KasirContent />
     </Suspense>
   );

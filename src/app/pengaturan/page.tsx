@@ -86,19 +86,19 @@ export default function PengaturanPage() {
 
         <main className="flex-1 p-6 lg:p-8 space-y-6 overflow-y-auto">
           {message && (
-            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-sm font-mono flex items-center justify-between">
-              <span className="font-bold">[BERHASIL] {message}</span>
-              <button onClick={() => setMessage('')} className="font-mono text-xs">
-                [X]
+            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-sm flex items-center justify-between">
+              <span className="font-semibold">Berhasil: {message}</span>
+              <button onClick={() => setMessage('')} className="text-xs font-semibold hover:text-emerald-950">
+                Tutup
               </button>
             </div>
           )}
 
           {error && (
-            <div className="p-4 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-sm font-mono flex items-center justify-between">
-              <span className="font-bold">[GAGAL] {error}</span>
-              <button onClick={() => setError('')} className="font-mono text-xs">
-                [X]
+            <div className="p-4 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-sm flex items-center justify-between">
+              <span className="font-semibold">Gagal: {error}</span>
+              <button onClick={() => setError('')} className="text-xs font-semibold hover:text-rose-950">
+                Tutup
               </button>
             </div>
           )}
@@ -108,19 +108,19 @@ export default function PengaturanPage() {
             <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm">
               <div className="pb-4 border-b border-slate-100 mb-5">
                 <h3 className="font-bold text-slate-800 text-base">Identitas Klinik / Instansi</h3>
-                <p className="text-xs text-slate-500 font-mono mt-0.5">
+                <p className="text-xs text-slate-500 mt-0.5">
                   Perubahan nama akan langsung diterapkan di seluruh antarmuka dan struk cetak
                 </p>
               </div>
 
               {loading ? (
-                <div className="p-8 text-center text-xs font-mono text-slate-400">
-                  [Memuat pengaturan...]
+                <div className="p-8 text-center text-sm text-slate-400">
+                  Memuat pengaturan...
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 font-mono mb-1 uppercase">
+                    <label className="block text-xs font-semibold text-slate-700 mb-1 uppercase tracking-wider">
                       Nama Klinik / Fasilitas Kesehatan *
                     </label>
                     <input
@@ -131,14 +131,14 @@ export default function PengaturanPage() {
                       placeholder="Contoh: Dolphin e-Clinic, Klinik Pratama Sehat"
                       className="w-full px-3.5 py-2.5 text-sm font-bold text-blue-700 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
                     />
-                    <p className="text-[11px] font-mono text-slate-400 mt-1">
+                    <p className="text-xs text-slate-500 mt-1">
                       Catatan: Nama juga dapat diatur secara statis melalui environment variable{' '}
-                      <code>NEXT_PUBLIC_CLINIC_NAME</code> di file <code>.env</code>.
+                      <code className="font-semibold text-slate-700">NEXT_PUBLIC_CLINIC_NAME</code> di file <code className="font-semibold text-slate-700">.env</code>.
                     </p>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 font-mono mb-1 uppercase">
+                    <label className="block text-xs font-semibold text-slate-700 mb-1 uppercase tracking-wider">
                       Tagline / Slogan Layanan *
                     </label>
                     <input
@@ -152,7 +152,7 @@ export default function PengaturanPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 font-mono mb-1 uppercase">
+                      <label className="block text-xs font-semibold text-slate-700 mb-1 uppercase tracking-wider">
                         No. Telepon / WhatsApp Klinik *
                       </label>
                       <input
@@ -160,12 +160,12 @@ export default function PengaturanPage() {
                         required
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-mono"
+                        className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 font-mono mb-1 uppercase">
+                      <label className="block text-xs font-semibold text-slate-700 mb-1 uppercase tracking-wider">
                         Email Resmi *
                       </label>
                       <input
@@ -173,13 +173,13 @@ export default function PengaturanPage() {
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-mono"
+                        className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 font-mono mb-1 uppercase">
+                    <label className="block text-xs font-semibold text-slate-700 mb-1 uppercase tracking-wider">
                       Alamat Lengkap Klinik *
                     </label>
                     <textarea
@@ -192,7 +192,7 @@ export default function PengaturanPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 font-mono mb-1 uppercase">
+                    <label className="block text-xs font-semibold text-slate-700 mb-1 uppercase tracking-wider">
                       Pesan Kaki Struk Kasir (Receipt Footer) *
                     </label>
                     <input
@@ -209,9 +209,9 @@ export default function PengaturanPage() {
                     <button
                       type="submit"
                       disabled={saving}
-                      className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-mono text-xs font-bold tracking-wide shadow transition"
+                      className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold tracking-wide shadow transition"
                     >
-                      {saving ? '[Menyimpan...]' : '[Simpan Pengaturan Klinik]'}
+                      {saving ? 'Menyimpan...' : 'Simpan Pengaturan Klinik'}
                     </button>
                   </div>
                 </form>
@@ -222,32 +222,32 @@ export default function PengaturanPage() {
             <div className="lg:col-span-5 space-y-4">
               {/* Preview Struk Kasir */}
               <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm">
-                <span className="font-mono text-xs font-bold text-slate-500 uppercase block mb-3">
+                <span className="text-xs font-semibold text-slate-600 uppercase block mb-3 tracking-wider">
                   Pratinjau Live Header Struk Kasir:
                 </span>
-                <div className="p-4 bg-slate-50 border border-dashed border-slate-300 rounded-xl text-center font-mono text-xs space-y-1">
-                  <p className="font-black text-sm text-slate-900">{formData.name}</p>
-                  <p className="text-[10px] text-slate-600">{formData.address}</p>
-                  <p className="text-[10px] text-slate-600">Telp: {formData.phone}</p>
-                  <div className="py-2 border-y border-dashed border-slate-300 my-2 text-[10px] text-slate-400">
-                    [Area Rincian Obat & Total]
+                <div className="p-4 bg-slate-50 border border-dashed border-slate-300 rounded-xl text-center text-xs space-y-1">
+                  <p className="font-bold text-sm text-slate-900">{formData.name}</p>
+                  <p className="text-xs text-slate-600">{formData.address}</p>
+                  <p className="text-xs text-slate-600">Telp: {formData.phone}</p>
+                  <div className="py-2 border-y border-dashed border-slate-300 my-2 text-xs text-slate-400">
+                    Area Rincian Obat & Total
                   </div>
-                  <p className="text-[10px] text-slate-500 italic mt-2">{formData.receiptFooter}</p>
+                  <p className="text-xs text-slate-500 italic mt-2">{formData.receiptFooter}</p>
                 </div>
               </div>
 
               {/* Data Akun Petugas Bawaan */}
               <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm">
-                <span className="font-mono text-xs font-bold text-slate-500 uppercase block mb-3">
+                <span className="text-xs font-semibold text-slate-600 uppercase block mb-3 tracking-wider">
                   Hak Akses Pengguna Sistem (RBAC)
                 </span>
-                <div className="space-y-2 text-xs font-mono">
+                <div className="space-y-2 text-xs">
                   <div className="p-2.5 rounded-xl bg-blue-50/70 border border-blue-200 flex items-center justify-between">
                     <div>
                       <p className="font-bold text-blue-900">Administrator</p>
-                      <p className="text-[11px] text-blue-700">Username: admin</p>
+                      <p className="text-xs text-blue-700">Username: admin</p>
                     </div>
-                    <span className="px-2 py-0.5 rounded bg-blue-600 text-white text-[10px] font-bold">
+                    <span className="px-2 py-0.5 rounded bg-blue-600 text-white text-xs font-semibold">
                       SEMUA FITUR
                     </span>
                   </div>
@@ -255,9 +255,9 @@ export default function PengaturanPage() {
                   <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                     <div>
                       <p className="font-bold text-slate-800">Petugas Pendaftaran</p>
-                      <p className="text-[11px] text-slate-500">Username: pendaftaran</p>
+                      <p className="text-xs text-slate-500">Username: pendaftaran</p>
                     </div>
-                    <span className="px-2 py-0.5 rounded bg-slate-200 text-slate-700 text-[10px] font-bold">
+                    <span className="px-2 py-0.5 rounded bg-slate-200 text-slate-700 text-xs font-semibold">
                       DATA PASIEN
                     </span>
                   </div>
@@ -265,9 +265,9 @@ export default function PengaturanPage() {
                   <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                     <div>
                       <p className="font-bold text-slate-800">Kasir Farmasi</p>
-                      <p className="text-[11px] text-slate-500">Username: kasir</p>
+                      <p className="text-xs text-slate-500">Username: kasir</p>
                     </div>
-                    <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                    <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-semibold">
                       KASIR & STOK
                     </span>
                   </div>

@@ -32,13 +32,13 @@ export default function TopNavbar({
   }, []);
 
   return (
-    <header className="bg-white border-b border-slate-200 px-8 py-4.5 flex flex-col md:flex-row md:items-center md:justify-between gap-4 sticky top-0 z-20">
+    <header className="bg-white border-b border-slate-200 px-8 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 sticky top-0 z-20">
       <div>
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+          <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
             {clinicName}
           </span>
-          <span className="text-slate-300">/</span>
+          <span className="text-slate-300 font-bold">/</span>
           <h2 className="text-lg font-bold text-slate-800 tracking-tight">{title}</h2>
         </div>
         {subtitle && <p className="text-xs text-slate-500 mt-0.5">{subtitle}</p>}
@@ -46,19 +46,19 @@ export default function TopNavbar({
 
       <div className="flex items-center flex-wrap gap-3">
         {/* Date pill */}
-        <div className="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 text-xs font-mono">
+        <div className="px-3.5 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 text-xs font-medium">
           {currentDate || 'Memuat tanggal...'}
         </div>
 
         {/* LAN Indicator Pill */}
-        <div className="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-medium flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-          <span>LAN : ONLINE</span>
+        <div className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>LAN : Terhubung</span>
         </div>
 
         {/* User Pill */}
-        <div className="px-3 py-1.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-900 text-xs font-medium flex items-center gap-2">
-          <span className="font-mono font-bold text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded">
+        <div className="px-3.5 py-1.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-900 text-xs font-medium flex items-center gap-2">
+          <span className="font-bold text-[11px] bg-blue-600 text-white px-2 py-0.5 rounded">
             {userRole || 'USER'}
           </span>
           <span className="font-semibold text-slate-700">{userName || 'Pengguna'}</span>
@@ -67,4 +67,3 @@ export default function TopNavbar({
     </header>
   );
 }
-

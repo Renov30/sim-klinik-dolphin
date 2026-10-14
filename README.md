@@ -85,9 +85,9 @@ Perintah di atas akan secara otomatis:
 ### 3. Buka Aplikasi di Browser
 Buka browser dan akses:
 ```
-http://localhost:3001
+http://localhost:3002
 ```
-*(Atau `http://localhost:3000` jika port 3000 host Anda tidak digunakan aplikasi lain).*
+*(Atau `http://localhost:3001` jika menjalankan via `npm run dev` secara langsung di host).*
 
 ---
 
@@ -102,7 +102,7 @@ Aplikasi telah dikonfigurasi untuk mendengarkan antarmuka `0.0.0.0`, sehingga da
 
 2. Buka browser pada komputer lain di jaringan yang sama dan akses:
    ```
-   http://192.168.1.11:3001
+   http://192.168.1.11:3002
    ```
 
 ---
