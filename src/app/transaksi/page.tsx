@@ -4,6 +4,17 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Sidebar from '@/components/Sidebar';
 import TopNavbar from '@/components/TopNavbar';
 import { formatRupiah, formatDateTimeIndo } from '@/lib/format';
+import {
+  Receipt,
+  Search,
+  RefreshCw,
+  Printer,
+  Calendar,
+  Wallet,
+  TrendingUp,
+  CreditCard,
+  X,
+} from 'lucide-react';
 
 interface Sale {
   id: string;
@@ -86,10 +97,10 @@ export default function TransaksiPage() {
   const totalOmzet = sales.reduce((acc, s) => acc + s.totalAmount, 0);
 
   return (
-    <div className="flex min-h-screen bg-slate-50 font-sans text-slate-800">
+    <div className="flex h-screen overflow-hidden bg-[#f1f4f9] font-sans text-slate-800 antialiased">
       <Sidebar clinicName={clinicName} userRole={userRole} userName={userName} />
 
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col h-screen overflow-y-auto min-w-0">
         <TopNavbar
           clinicName={clinicName}
           userName={userName}
@@ -98,47 +109,62 @@ export default function TransaksiPage() {
           subtitle="Arsip data penjualan kasir farmasi dan pencetakan ulang struk belanja"
         />
 
-        <main className="flex-1 p-6 lg:p-8 space-y-6 overflow-y-auto">
+        <main className="flex-1 px-8 pb-8 pt-0 space-y-6">
           {/* Stat metrics */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm">
-              <span className="text-xs font-semibold text-slate-500 block uppercase tracking-wider">
-                Total Transaksi
-              </span>
-              <p className="text-2xl font-bold text-slate-800 mt-1">{sales.length} Faktur</p>
-              <span className="text-xs text-emerald-700 mt-1 block font-medium">
-                Tercatat di Database PostgreSQL
-              </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <Receipt className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-slate-400 block uppercase tracking-wider">
+                  Total Transaksi
+                </span>
+                <p className="text-2xl font-black text-slate-800 tracking-tight mt-0.5">{sales.length} Faktur</p>
+                <span className="text-xs text-blue-600 font-semibold">
+                  Tercatat di PostgreSQL
+                </span>
+              </div>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm">
-              <span className="text-xs font-semibold text-slate-500 block uppercase tracking-wider">
-                Total Penerimaan Kas
-              </span>
-              <p className="text-2xl font-bold text-slate-800 mt-1 truncate">
-                {formatRupiah(totalOmzet)}
-              </p>
-              <span className="text-xs text-emerald-600 mt-1 block font-medium">
-                Total Nilai Penjualan
-              </span>
+            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <Wallet className="w-6 h-6" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-xs font-bold text-slate-400 block uppercase tracking-wider">
+                  Total Penerimaan Kas
+                </span>
+                <p className="text-2xl font-black text-slate-800 tracking-tight mt-0.5 truncate" title={formatRupiah(totalOmzet)}>
+                  {formatRupiah(totalOmzet)}
+                </p>
+                <span className="text-xs text-emerald-600 font-semibold">
+                  Pemasukan Kasir
+                </span>
+              </div>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm">
-              <span className="text-xs font-semibold text-slate-500 block uppercase tracking-wider">
-                Rata-rata Transaksi
-              </span>
-              <p className="text-2xl font-bold text-slate-800 mt-1 truncate">
-                {formatRupiah(sales.length > 0 ? totalOmzet / sales.length : 0)}
-              </p>
-              <span className="text-xs text-purple-600 mt-1 block font-medium">
-                Per Pasien / Pelanggan
-              </span>
+            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                <TrendingUp className="w-6 h-6" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-xs font-bold text-slate-400 block uppercase tracking-wider">
+                  Rata-rata Transaksi
+                </span>
+                <p className="text-2xl font-black text-slate-800 tracking-tight mt-0.5 truncate" title={formatRupiah(sales.length > 0 ? totalOmzet / sales.length : 0)}>
+                  {formatRupiah(sales.length > 0 ? totalOmzet / sales.length : 0)}
+                </p>
+                <span className="text-xs text-purple-600 font-semibold">
+                  Per Pasien / Transaksi
+                </span>
+              </div>
             </div>
           </div>
 
           {/* Search Header */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex-1 max-w-md">
+          <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex-1 max-w-md relative">
               <input
                 type="text"
                 value={search}
@@ -147,8 +173,9 @@ export default function TransaksiPage() {
                   loadSales(e.target.value);
                 }}
                 placeholder="Cari Nomor Faktur (contoh: INV-20261014) atau Nama Pasien..."
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-600 font-medium text-sm bg-slate-50 focus:bg-white transition"
+                className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium text-sm bg-slate-50 focus:bg-white transition"
               />
+              <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
             </div>
 
             <div className="flex items-center gap-2">
@@ -157,21 +184,22 @@ export default function TransaksiPage() {
                   setSearch('');
                   loadSales('');
                 }}
-                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200/80 transition cursor-pointer"
               >
-                Segarkan Data
+                <RefreshCw className="w-3.5 h-3.5 text-slate-500" />
+                <span>Segarkan Data</span>
               </button>
             </div>
           </div>
 
           {/* Table Riwayat Transaksi */}
-          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden">
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-xs overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider">
                 Log Transaksi Penjualan Farmasi
               </h3>
-              <span className="text-xs text-slate-500">
-                Semua Data Tersimpan di Database PostgreSQL
+              <span className="text-xs text-slate-400">
+                Semua Data Tersimpan di PostgreSQL
               </span>
             </div>
 
@@ -186,7 +214,7 @@ export default function TransaksiPage() {
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
-                  <thead className="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200 font-semibold">
+                  <thead className="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-100 font-semibold">
                     <tr>
                       <th className="px-6 py-3.5">No. Faktur</th>
                       <th className="px-6 py-3.5">Waktu Transaksi</th>
@@ -199,9 +227,9 @@ export default function TransaksiPage() {
                   </thead>
                   <tbody className="divide-y divide-slate-100 font-medium">
                     {sales.map((sale) => (
-                      <tr key={sale.id} className="hover:bg-emerald-50/30 transition">
-                        <td className="px-6 py-4 font-bold text-emerald-800 whitespace-nowrap">
-                          <span className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-xs">
+                      <tr key={sale.id} className="hover:bg-slate-50/80 transition">
+                        <td className="px-6 py-4 font-bold text-blue-700 whitespace-nowrap">
+                          <span className="px-2.5 py-1 rounded-md bg-blue-50 border border-blue-200 text-xs font-semibold">
                             {sale.invoiceNumber}
                           </span>
                         </td>
@@ -210,7 +238,7 @@ export default function TransaksiPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <p className="font-bold text-slate-800">{sale.customerName}</p>
-                          <p className="text-xs text-slate-500">
+                          <p className="text-xs text-slate-400">
                             {sale.items.length} macam obat
                           </p>
                         </td>
@@ -229,9 +257,10 @@ export default function TransaksiPage() {
                           <button
                             type="button"
                             onClick={() => handleOpenReceipt(sale.id)}
-                            className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold transition cursor-pointer"
                           >
-                            Cetak Struk
+                            <Printer className="w-3.5 h-3.5 text-blue-600" />
+                            <span>Cetak Struk</span>
                           </button>
                         </td>
                       </tr>
@@ -356,9 +385,10 @@ export default function TransaksiPage() {
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold tracking-wide shadow transition"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold tracking-wide shadow-sm transition cursor-pointer"
               >
-                Cetak Ulang Struk
+                <Printer className="w-4 h-4" />
+                <span>Cetak Ulang Struk</span>
               </button>
             </div>
           </div>

@@ -5,6 +5,24 @@ import { useSearchParams } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import TopNavbar from '@/components/TopNavbar';
 import { formatRupiah, formatDateTimeIndo } from '@/lib/format';
+import {
+  ShoppingCart,
+  Search,
+  Plus,
+  Minus,
+  Trash2,
+  Printer,
+  CheckCircle2,
+  RotateCcw,
+  Receipt,
+  User,
+  DollarSign,
+  AlertCircle,
+  X,
+  CreditCard,
+  Banknote,
+  QrCode,
+} from 'lucide-react';
 
 interface Medicine {
   id: string;
@@ -307,10 +325,10 @@ function KasirContent() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50 font-sans text-slate-800">
+    <div className="flex h-screen overflow-hidden bg-[#f1f4f9] font-sans text-slate-800 antialiased">
       <Sidebar clinicName={clinicName} userRole={userRole} userName={userName} />
 
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col h-screen overflow-y-auto min-w-0">
         <TopNavbar
           clinicName={clinicName}
           userName={userName}
@@ -319,19 +337,20 @@ function KasirContent() {
           subtitle="Point of Sales Farmasi - Pengurangan stok instan dan cetak struk pembayaran"
         />
 
-        <main className="flex-1 p-6 lg:p-8 space-y-6 overflow-y-auto">
+        <main className="flex-1 px-8 pb-8 pt-0 space-y-6">
           {/* Error Alert */}
           {errorMessage && (
-            <div className="p-4 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-sm flex items-center justify-between shadow-xs">
+            <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-sm flex items-center justify-between shadow-xs">
               <div className="flex items-center gap-2">
+                <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
                 <span className="font-bold">Peringatan:</span>
                 <span>{errorMessage}</span>
               </div>
               <button
                 onClick={() => setErrorMessage('')}
-                className="text-xs text-rose-600 hover:text-rose-900 font-bold"
+                className="text-xs text-rose-600 hover:text-rose-900 font-bold p-1 cursor-pointer"
               >
-                Tutup
+                <X className="w-4 h-4" />
               </button>
             </div>
           )}
@@ -339,29 +358,32 @@ function KasirContent() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {/* LEFT COLUMN: KATALOG OBAT (7 COLS) */}
             <div className="lg:col-span-7 space-y-4">
-              <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm">
+              <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs">
                 <div className="flex items-center justify-between gap-4 mb-3">
-                  <div className="flex-1">
-                    <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                  <div className="flex-1 relative">
+                    <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
                       Cari Obat untuk Ditambahkan
                     </label>
-                    <input
-                      type="text"
-                      value={searchMed}
-                      onChange={(e) => {
-                        setSearchMed(e.target.value);
-                        loadMedicines(e.target.value);
-                      }}
-                      placeholder="Ketik nama obat atau kode (contoh: Paracetamol, OBT-001)..."
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-600 font-medium text-sm bg-slate-50 focus:bg-white transition"
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={searchMed}
+                        onChange={(e) => {
+                          setSearchMed(e.target.value);
+                          loadMedicines(e.target.value);
+                        }}
+                        placeholder="Ketik nama obat atau kode (contoh: Paracetamol, OBT-001)..."
+                        className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium text-sm bg-slate-50 focus:bg-white transition"
+                      />
+                      <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+                    </div>
                   </div>
                   <button
                     onClick={() => {
                       setSearchMed('');
                       loadMedicines('');
                     }}
-                    className="mt-5 px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold"
+                    className="mt-5 px-3.5 py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200/80 transition"
                   >
                     Reset
                   </button>
@@ -379,7 +401,7 @@ function KasirContent() {
                     Memuat katalog obat...
                   </div>
                 ) : medicines.length === 0 ? (
-                  <div className="col-span-2 p-12 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">
+                  <div className="col-span-2 p-12 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-100 shadow-xs">
                     Tidak ada obat yang cocok dengan pencarian
                   </div>
                 ) : (
@@ -392,12 +414,12 @@ function KasirContent() {
                         className={`p-4 rounded-2xl border transition flex flex-col justify-between ${
                           isOutOfStock
                             ? 'bg-slate-100/70 border-slate-200 opacity-60'
-                            : 'bg-white border-slate-200/90 hover:border-emerald-300 hover:shadow-sm'
+                            : 'bg-white border-slate-100 hover:border-blue-300 hover:shadow-xs'
                         }`}
                       >
                         <div>
                           <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
+                            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
                               {m.code}
                             </span>
                             <span
@@ -425,15 +447,16 @@ function KasirContent() {
                           <button
                             disabled={isOutOfStock}
                             onClick={() => addToCart(m)}
-                            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
+                            className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                               isOutOfStock
                                 ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                                 : inCart
-                                ? 'bg-emerald-800 text-white shadow-xs'
-                                : 'bg-emerald-700 hover:bg-emerald-800 text-white shadow-xs'
+                                ? 'bg-blue-700 text-white shadow-xs'
+                                : 'bg-blue-600 hover:bg-blue-700 text-white shadow-xs'
                             }`}
                           >
-                            {inCart ? `+ (${inCart.quantity})` : '+ Keranjang'}
+                            <Plus className="w-3 h-3" />
+                            <span>{inCart ? `(${inCart.quantity})` : 'Keranjang'}</span>
                           </button>
                         </div>
                       </div>
@@ -642,9 +665,9 @@ function KasirContent() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950">
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-950">
                   <span className="font-bold text-sm uppercase">Total Tagihan:</span>
-                  <span className="font-bold text-xl text-emerald-800">
+                  <span className="font-black text-2xl text-blue-600">
                     {formatRupiah(totalAmount)}
                   </span>
                 </div>
@@ -663,10 +686,10 @@ function KasirContent() {
                           setPaymentMethod(method);
                           if (method !== 'TUNAI') setPayAmount(totalAmount);
                         }}
-                        className={`py-1.5 px-2 rounded-xl text-center font-semibold text-xs transition border ${
+                        className={`py-2 px-2 rounded-xl text-center font-bold text-xs transition border cursor-pointer ${
                           paymentMethod === method
-                            ? 'bg-emerald-700 text-white border-emerald-800'
-                            : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
+                            ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                            : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                         }`}
                       >
                         {method}
@@ -685,7 +708,7 @@ function KasirContent() {
                       <button
                         type="button"
                         onClick={() => handlePresetPay('PAS')}
-                        className="text-xs text-emerald-700 font-semibold hover:underline"
+                        className="text-xs text-blue-600 font-bold hover:underline cursor-pointer"
                       >
                         Uang Pas
                       </button>
@@ -696,7 +719,7 @@ function KasirContent() {
                       value={payAmount || ''}
                       onChange={(e) => setPayAmount(parseFloat(e.target.value) || 0)}
                       placeholder="Masukkan nominal bayar..."
-                      className="w-full px-3 py-2 text-base font-bold rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 text-slate-800"
+                      className="w-full px-3.5 py-2 text-base font-bold rounded-xl border border-slate-200/90 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800"
                     />
 
                     {/* Quick presets */}
@@ -706,7 +729,7 @@ function KasirContent() {
                           key={preset}
                           type="button"
                           onClick={() => handlePresetPay(preset)}
-                          className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold"
+                          className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold cursor-pointer"
                         >
                           {preset / 1000}k
                         </button>
@@ -732,7 +755,7 @@ function KasirContent() {
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Contoh: Pembelian obat bebas tanpa resep"
-                    className="w-full px-3 py-1.5 text-xs rounded-xl border border-slate-300"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200/90 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -742,9 +765,10 @@ function KasirContent() {
                 type="button"
                 disabled={processing || cart.length === 0}
                 onClick={handleCheckout}
-                className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm tracking-wide shadow-sm transition disabled:opacity-50 cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm tracking-wide shadow-md shadow-blue-500/25 transition disabled:opacity-50 cursor-pointer"
               >
-                {processing ? 'Memproses Transaksi...' : 'Proses Pembayaran & Cetak Struk'}
+                <CreditCard className="w-4 h-4" />
+                <span>{processing ? 'Memproses Transaksi...' : 'Proses Pembayaran & Cetak Struk'}</span>
               </button>
             </div>
           </div>
@@ -869,9 +893,10 @@ function KasirContent() {
               <button
                 type="button"
                 onClick={handlePrint}
-                className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold tracking-wide shadow transition"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold tracking-wide shadow-sm transition cursor-pointer"
               >
-                Cetak Struk
+                <Printer className="w-4 h-4" />
+                <span>Cetak Struk</span>
               </button>
             </div>
           </div>

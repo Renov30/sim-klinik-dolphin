@@ -4,6 +4,20 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Sidebar from '@/components/Sidebar';
 import TopNavbar from '@/components/TopNavbar';
 import { formatRupiah, formatDateTimeIndo } from '@/lib/format';
+import {
+  Plus,
+  Search,
+  Pill,
+  AlertTriangle,
+  Layers,
+  History,
+  Pencil,
+  CheckCircle2,
+  X,
+  PackageCheck,
+  TrendingDown,
+  Warehouse,
+} from 'lucide-react';
 
 interface Category {
   id: string;
@@ -327,10 +341,10 @@ export default function ObatPage() {
   const criticalCount = medicines.filter((m) => m.stock <= m.minStock).length;
 
   return (
-    <div className="flex min-h-screen bg-slate-50 font-sans text-slate-800">
+    <div className="flex h-screen overflow-hidden bg-[#f1f4f9] font-sans text-slate-800 antialiased">
       <Sidebar clinicName={clinicName} userRole={userRole} userName={userName} />
 
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col h-screen overflow-y-auto min-w-0">
         <TopNavbar
           clinicName={clinicName}
           userName={userName}
@@ -339,81 +353,99 @@ export default function ObatPage() {
           subtitle="Katalog obat, kategori terapi, harga jual, dan kontrol stok otomatis anti-minus"
         />
 
-        <main className="flex-1 p-6 lg:p-8 space-y-6 overflow-y-auto">
+        <main className="flex-1 px-8 pb-8 pt-0 space-y-6">
           {/* Toast Notification */}
           {toast && (
-            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-sm font-medium flex items-center justify-between shadow-sm">
+            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium flex items-center justify-between shadow-xs">
               <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                 <span className="font-bold">Berhasil:</span>
                 <span>{toast}</span>
               </div>
               <button
                 onClick={() => setToast('')}
-                className="text-xs text-emerald-600 hover:text-emerald-900 font-bold"
+                className="text-xs text-emerald-600 hover:text-emerald-900 font-bold p-1 cursor-pointer"
               >
-                &times;
+                <X className="w-4 h-4" />
               </button>
             </div>
           )}
 
           {/* Stat summary cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-              <span className="text-xs text-slate-500 block uppercase font-semibold">
-                Total Item Produk
-              </span>
-              <p className="text-2xl font-bold text-slate-800 mt-1">{medicines.length} Obat</p>
-              <span className="text-xs text-emerald-700 mt-1 block font-medium">
-                {totalStockUnits} Total Unit Fisik Tersedia
-              </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <Pill className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-xs text-slate-400 block uppercase font-bold tracking-wider">
+                  Total Item Produk
+                </span>
+                <p className="text-2xl font-black text-slate-800 tracking-tight mt-0.5">{medicines.length} Obat</p>
+                <span className="text-xs text-blue-600 font-semibold">
+                  {totalStockUnits} Total Unit Fisik
+                </span>
+              </div>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-              <span className="text-xs text-slate-500 block uppercase font-semibold">
-                Estimasi Nilai Aset Stok (HPP)
-              </span>
-              <p className="text-2xl font-bold text-slate-800 mt-1 truncate">
-                {formatRupiah(totalValuation)}
-              </p>
-              <span className="text-xs text-emerald-600 mt-1 block font-medium">
-                Total Modal Terikat di Apotek
-              </span>
+            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <Warehouse className="w-6 h-6" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-xs text-slate-400 block uppercase font-bold tracking-wider">
+                  Estimasi Nilai Aset Stok
+                </span>
+                <p className="text-2xl font-black text-slate-800 tracking-tight mt-0.5 truncate" title={formatRupiah(totalValuation)}>
+                  {formatRupiah(totalValuation)}
+                </p>
+                <span className="text-xs text-emerald-600 font-semibold">
+                  Modal Terikat Apotek
+                </span>
+              </div>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-              <span className="text-xs text-slate-500 block uppercase font-semibold">
-                Kondisi Stok Kritis
-              </span>
-              <p className="text-2xl font-bold text-rose-600 mt-1">{criticalCount} Item</p>
-              <span className="text-xs text-rose-600 mt-1 block font-medium">
-                {criticalCount > 0 ? 'Perlu Segera Restock / Order' : 'Semua Stok di Atas Batas Minimum'}
-              </span>
+            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs flex items-center gap-4">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${criticalCount > 0 ? 'bg-rose-50 text-rose-600' : 'bg-slate-50 text-slate-400'}`}>
+                <AlertTriangle className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-xs text-slate-400 block uppercase font-bold tracking-wider">
+                  Kondisi Stok Kritis
+                </span>
+                <p className={`text-2xl font-black tracking-tight mt-0.5 ${criticalCount > 0 ? 'text-rose-600' : 'text-slate-800'}`}>{criticalCount} Item</p>
+                <span className={`text-xs font-semibold ${criticalCount > 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                  {criticalCount > 0 ? 'Perlu Segera Restock' : 'Semua Stok Aman'}
+                </span>
+              </div>
             </div>
           </div>
 
           {/* Action Header Card & Filter */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-xs space-y-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div className="flex-1 max-w-md">
+              <div className="flex-1 max-w-md relative">
                 <input
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Cari nama obat atau kode (contoh: OBT-001, Paracetamol)..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-600 font-normal text-sm bg-slate-50 focus:bg-white transition"
+                  className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-normal text-sm bg-slate-50 focus:bg-white transition"
                 />
+                <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
               </div>
 
               <div className="flex items-center flex-wrap gap-2.5">
                 <button
                   onClick={() => setLowStockFilter(!lowStockFilter)}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition border ${
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition border ${
                     lowStockFilter
                       ? 'bg-rose-600 text-white border-rose-700 shadow-xs'
                       : 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100'
                   }`}
                 >
-                  {lowStockFilter ? 'Filter: Stok Kritis Aktif' : 'Tampilkan Stok Kritis'}
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  <span>{lowStockFilter ? 'Filter: Stok Kritis Aktif' : 'Tampilkan Stok Kritis'}</span>
                 </button>
 
                 {userRole === 'ADMIN' && (
@@ -422,18 +454,20 @@ export default function ObatPage() {
                       setFormError('');
                       setShowCategoryModal(true);
                     }}
-                    className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold border border-slate-200 transition cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200/80 transition cursor-pointer"
                   >
-                    + Kategori
+                    <Layers className="w-3.5 h-3.5 text-slate-500" />
+                    <span>+ Kategori</span>
                   </button>
                 )}
 
                 {userRole === 'ADMIN' && (
                   <button
                     onClick={handleOpenAdd}
-                    className="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs tracking-wide shadow-sm cursor-pointer transition"
+                    className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs tracking-wide shadow-sm hover:shadow cursor-pointer transition"
                   >
-                    + Tambah Obat Baru
+                    <Plus className="w-4 h-4" />
+                    <span>+ Tambah Obat Baru</span>
                   </button>
                 )}
               </div>
@@ -443,10 +477,10 @@ export default function ObatPage() {
             <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
               <button
                 onClick={() => setSelectedCategory('')}
-                className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition font-medium ${
+                className={`px-3.5 py-1.5 rounded-xl whitespace-nowrap transition font-semibold ${
                   selectedCategory === ''
-                    ? 'bg-emerald-700 text-white font-bold'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/60'
                 }`}
               >
                 Semua ({medicines.length})
@@ -455,10 +489,10 @@ export default function ObatPage() {
                 <button
                   key={c.id}
                   onClick={() => setSelectedCategory(c.id)}
-                  className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition font-medium ${
+                  className={`px-3.5 py-1.5 rounded-xl whitespace-nowrap transition font-semibold ${
                     selectedCategory === c.id
-                      ? 'bg-emerald-700 text-white font-bold'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      ? 'bg-blue-600 text-white shadow-xs'
+                      : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/60'
                   }`}
                 >
                   {c.name}
@@ -468,7 +502,7 @@ export default function ObatPage() {
           </div>
 
           {/* Table Master Obat */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-xs overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider">
                 Daftar Obat Farmasi Klinik
@@ -564,24 +598,27 @@ export default function ObatPage() {
                             <div className="flex items-center justify-end gap-2 text-xs">
                               <button
                                 onClick={() => handleOpenStock(m)}
-                                className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold transition cursor-pointer"
+                                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold transition cursor-pointer"
                                 title="Tambah Stok / Restock"
                               >
-                                + Stok
+                                <Plus className="w-3.5 h-3.5" />
+                                <span>+ Stok</span>
                               </button>
                               <button
                                 onClick={() => handleOpenHistory(m)}
-                                className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition cursor-pointer"
+                                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition cursor-pointer"
                                 title="Kartu Riwayat Stok"
                               >
-                                Kartu Stok
+                                <History className="w-3.5 h-3.5 text-slate-500" />
+                                <span>Kartu Stok</span>
                               </button>
                               {userRole === 'ADMIN' && (
                                 <button
                                   onClick={() => handleOpenEdit(m)}
-                                  className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-semibold transition cursor-pointer"
+                                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-semibold transition cursor-pointer"
                                 >
-                                  Edit
+                                  <Pencil className="w-3.5 h-3.5" />
+                                  <span>Edit</span>
                                 </button>
                               )}
                             </div>

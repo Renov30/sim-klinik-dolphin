@@ -1,6 +1,15 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import {
+  LayoutGrid,
+  Search,
+  Bell,
+  Mail,
+  ChevronDown,
+  LogOut,
+} from 'lucide-react';
 
 interface TopNavbarProps {
   clinicName: string;
@@ -12,56 +21,129 @@ interface TopNavbarProps {
 
 export default function TopNavbar({
   clinicName,
-  userName,
-  userRole,
+  userName = 'Administrator',
+  userRole = 'ADMIN',
   title,
   subtitle,
 }: TopNavbarProps) {
-  const [currentDate, setCurrentDate] = useState<string>('');
+  const router = useRouter();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    const now = new Date();
-    setCurrentDate(
-      new Intl.DateTimeFormat('id-ID', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      }).format(now)
-    );
-  }, []);
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      router.push('/login');
+      router.refresh();
+    } catch (e) {
+      console.error('Logout error:', e);
+    }
+  };
 
   return (
-    <header className="bg-white border-b border-slate-200 px-8 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 sticky top-0 z-20">
-      <div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-            {clinicName}
-          </span>
-          <span className="text-slate-300 font-bold">/</span>
-          <h2 className="text-lg font-bold text-slate-800 tracking-tight">{title}</h2>
+    <header className="bg-transparent px-8 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      {/* Title with Grid Icon */}
+      <div className="flex items-center gap-3">
+        <div className="text-slate-800">
+          <LayoutGrid className="w-6 h-6 stroke-[2.5]" />
         </div>
-        {subtitle && <p className="text-xs text-slate-500 mt-0.5">{subtitle}</p>}
+        <div>
+          <h1 className="text-2xl font-extrabold text-slate-800 tracking-tight">
+            {title}
+          </h1>
+          {subtitle && (
+            <p className="text-xs text-slate-400 font-medium">{subtitle}</p>
+          )}
+        </div>
       </div>
 
-      <div className="flex items-center flex-wrap gap-3">
-        {/* Date pill */}
-        <div className="px-3.5 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 text-xs font-medium">
-          {currentDate || 'Memuat tanggal...'}
+      {/* Center Search Pill */}
+      <div className="flex-1 max-w-md mx-auto hidden lg:block">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search Here..."
+            className="w-full bg-white border border-slate-200/80 rounded-xl py-2.5 pl-4 pr-10 text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition shadow-xs"
+          />
+          <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
         </div>
+      </div>
 
-        {/* LAN Indicator Pill */}
-        <div className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>LAN : Terhubung</span>
-        </div>
-
-        {/* User Pill */}
-        <div className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950 text-xs font-medium flex items-center gap-2">
-          <span className="font-bold text-[11px] bg-emerald-700 text-white px-2 py-0.5 rounded">
-            {userRole || 'USER'}
+      {/* Right Actions: Notifications & User Profile */}
+      <div className="flex items-center gap-4">
+        {/* Bell Notification */}
+        <button
+          type="button"
+          aria-label="Notifikasi"
+          className="relative w-10 h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-500 hover:text-slate-700 hover:bg-slate-50 shadow-xs transition cursor-pointer"
+        >
+          <Bell className="w-4 h-4" />
+          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center border-2 border-white">
+            6
           </span>
-          <span className="font-semibold text-slate-700">{userName || 'Pengguna'}</span>
+        </button>
+
+        {/* Mail Notification */}
+        <button
+          type="button"
+          aria-label="Pesan"
+          className="relative w-10 h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-500 hover:text-slate-700 hover:bg-slate-50 shadow-xs transition cursor-pointer"
+        >
+          <Mail className="w-4 h-4" />
+          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-400 text-white text-[10px] font-bold flex items-center justify-center border-2 border-white">
+            23
+          </span>
+        </button>
+
+        {/* User Profile Card with Dropdown */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="flex items-center gap-3 pl-2 p-1 rounded-xl hover:bg-slate-100/60 transition cursor-pointer text-left"
+          >
+            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-xs shrink-0 overflow-hidden">
+              <span className="text-base">
+                {userName ? userName.charAt(0).toUpperCase() : 'A'}
+              </span>
+            </div>
+            <div className="hidden sm:block text-left">
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm font-bold text-slate-800 leading-tight">
+                  Hi {userName || 'User'}
+                </span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-slate-400 transition-transform ${
+                    dropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </div>
+              <p className="text-[11px] text-slate-400 font-medium leading-tight">
+                {userRole.toLowerCase()}@
+                {clinicName.toLowerCase().replace(/[^a-z0-9]/g, '')}.com
+              </p>
+            </div>
+          </button>
+
+          {dropdownOpen && (
+            <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50">
+              <div className="px-4 py-2 border-b border-slate-100">
+                <p className="text-xs font-bold text-slate-800 truncate">
+                  {userName}
+                </p>
+                <p className="text-[11px] text-slate-400 uppercase font-semibold">
+                  {userRole}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Keluar Sistem</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

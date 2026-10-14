@@ -3,10 +3,26 @@ import Link from 'next/link';
 import DashboardLayout from '@/components/DashboardLayout';
 import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
-import { formatRupiah, formatDateTimeIndo } from '@/lib/format';
+import { getClinicSettings } from '@/lib/clinic';
+import { formatRupiah } from '@/lib/format';
+import {
+  Users,
+  Pill,
+  Receipt,
+  Wallet,
+  Printer,
+  MoreHorizontal,
+  ChevronLeft,
+  ChevronRight,
+  UserPlus,
+  ShoppingCart,
+  PackagePlus,
+  ArrowUpRight,
+} from 'lucide-react';
 
 export default async function DashboardPage() {
   const session = await getSession();
+  const clinic = await getClinicSettings();
 
   // Hitung metrik hari ini
   const todayStart = new Date();
@@ -20,8 +36,6 @@ export default async function DashboardPage() {
     todaySales,
     allSales,
     recentSales,
-    categories,
-    topMedicines,
   ] = await Promise.all([
     prisma.patient.count(),
     prisma.patient.count({
@@ -59,526 +73,523 @@ export default async function DashboardPage() {
         items: true,
       },
     }),
-    prisma.category.findMany({
-      include: {
-        _count: { select: { medicines: true } },
-      },
-      take: 6,
-    }),
-    prisma.medicine.findMany({
-      where: { isActive: true },
-      orderBy: { sellPrice: 'desc' },
-      take: 3,
-      include: { category: true },
-    }),
   ]);
 
   const todayRevenue = todaySales._sum.totalAmount || 0;
-  const todayCount = todaySales._count.id || 0;
   const totalRevenue = allSales._sum.totalAmount || 0;
   const totalSaleCount = allSales._count.id || 0;
   const avgPerSale = totalSaleCount > 0 ? Math.round(totalRevenue / totalSaleCount) : 0;
 
-  // Tanggal terformat Indonesia
-  const todayDateString = new Intl.DateTimeFormat('id-ID', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(new Date());
-
-  // Hitung persentase ketersediaan stok
-  const safeStockCount = totalMedicines - lowStockMedicines.length;
-  const stockSafetyRate = totalMedicines > 0 ? Math.round((safeStockCount / totalMedicines) * 100) : 100;
+  // Invoice badge colors matching Pelio dashboard
+  const badgeColors = [
+    { bg: 'bg-blue-600', text: 'text-white' },
+    { bg: 'bg-amber-400', text: 'text-amber-950' },
+    { bg: 'bg-emerald-500', text: 'text-white' },
+    { bg: 'bg-rose-500', text: 'text-white' },
+    { bg: 'bg-indigo-600', text: 'text-white' },
+  ];
 
   return (
     <DashboardLayout
-      title="Dashboard Utama"
-      subtitle="Monitoring operasional klinik, pasien, stok farmasi, dan kasir"
+      title="Dashboard"
+      subtitle="Ringkasan eksekutif transaksi, rekam medis pasien, dan pergerakan stok farmasi"
     >
-      <div className="space-y-6">
-        {/* 1. HERO BANNER (Rich Emerald Green matching Reference UI) */}
-        <div className="relative overflow-hidden rounded-2xl bg-emerald-800 p-6 md:p-8 text-white shadow-sm border border-emerald-900">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-2">
-                <span className="text-xs px-2.5 py-0.5 rounded-md bg-emerald-900 text-emerald-200 border border-emerald-700 font-semibold uppercase tracking-wider">
-                  SIM-KLINIK OPERASIONAL
-                </span>
-                <span className="text-xs px-2.5 py-0.5 rounded-md bg-white/10 text-emerald-100 font-medium">
-                  {todayDateString}
-                </span>
+      <div className="space-y-6 pb-6">
+        {/* ROW 1: 4 VIBRANT METRIC CARDS (Exact match to reference design) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {/* Card 1: Emerald Green */}
+          <div className="relative overflow-hidden rounded-2xl bg-[#00c982] text-white p-5 shadow-sm transition hover:shadow-md">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <Users className="w-5 h-5 text-white" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
-                Selamat Datang, {session?.name || 'Administrator'}
-              </h2>
-              <p className="text-emerald-100 text-sm mt-1 max-w-xl font-normal leading-relaxed">
-                Pantau performa layanan klinik, arus transaksi kasir farmasi, dan ketersediaan obat secara langsung.
-              </p>
+              <div>
+                <p className="text-2xl font-black tracking-tight leading-none">
+                  {totalPatients.toLocaleString('id-ID')}
+                </p>
+                <p className="text-xs text-emerald-100 font-medium mt-1">
+                  Total Pasien
+                </p>
+              </div>
+            </div>
+            {/* Watermark decorative circle */}
+            <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/15 pointer-events-none" />
+          </div>
+
+          {/* Card 2: Sky Blue */}
+          <div className="relative overflow-hidden rounded-2xl bg-[#00a8ff] text-white p-5 shadow-sm transition hover:shadow-md">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <Pill className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-2xl font-black tracking-tight leading-none">
+                  {totalMedicines.toLocaleString('id-ID')}
+                </p>
+                <p className="text-xs text-sky-100 font-medium mt-1">
+                  Master Obat
+                </p>
+              </div>
+            </div>
+            {/* Watermark decorative circle */}
+            <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/15 pointer-events-none" />
+          </div>
+
+          {/* Card 3: Amber Yellow */}
+          <div className="relative overflow-hidden rounded-2xl bg-[#ffb703] text-white p-5 shadow-sm transition hover:shadow-md">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <Receipt className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-2xl font-black tracking-tight leading-none">
+                  {totalSaleCount.toLocaleString('id-ID')}
+                </p>
+                <p className="text-xs text-amber-100 font-medium mt-1">
+                  Transaksi Selesai
+                </p>
+              </div>
+            </div>
+            {/* Watermark decorative circle */}
+            <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/15 pointer-events-none" />
+          </div>
+
+          {/* Card 4: Coral Red */}
+          <div className="relative overflow-hidden rounded-2xl bg-[#ff5d55] text-white p-5 shadow-sm transition hover:shadow-md">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <Wallet className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-xl font-black tracking-tight leading-none truncate max-w-[150px]" title={formatRupiah(totalRevenue)}>
+                  {formatRupiah(totalRevenue)}
+                </p>
+                <p className="text-xs text-rose-100 font-medium mt-1">
+                  Penerimaan Kasir
+                </p>
+              </div>
+            </div>
+            {/* Watermark decorative circle */}
+            <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/15 pointer-events-none" />
+          </div>
+        </div>
+
+        {/* QUICK SHORTCUT BAR */}
+        <div className="bg-white rounded-2xl p-4 border border-slate-100/80 shadow-xs flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+            <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+            <span>Akses Cepat Pelayanan:</span>
+          </div>
+          <div className="flex items-center flex-wrap gap-2.5">
+            <Link
+              href="/pasien"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Daftar Pasien Baru</span>
+            </Link>
+            <Link
+              href="/kasir"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition"
+            >
+              <ShoppingCart className="w-4 h-4" />
+              <span>Buka Kasir Penjualan</span>
+            </Link>
+            <Link
+              href="/obat"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition"
+            >
+              <PackagePlus className="w-4 h-4" />
+              <span>Kelola Stok Obat</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* ROW 2: LATEST TRANSACTIONS & STATISTICS CHART */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left Column: Latest Transactions (8 cols out of 12 = ~67%) */}
+          <div className="lg:col-span-8 bg-white rounded-2xl p-6 border border-slate-100/90 shadow-xs flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-5">
+                <h2 className="text-base font-bold text-slate-800">
+                  Latest Transactions
+                </h2>
+                <Link
+                  href="/transaksi"
+                  className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                >
+                  <span>Lihat Semua</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
+              {/* Transactions List */}
+              <div className="space-y-4">
+                {recentSales.length === 0 ? (
+                  <div className="py-12 text-center text-slate-400 text-sm">
+                    Belum ada riwayat transaksi penjualan kasir.
+                  </div>
+                ) : (
+                  recentSales.map((sale, idx) => {
+                    const badge = badgeColors[idx % badgeColors.length];
+                    const timeDiffMins = Math.max(
+                      1,
+                      Math.round(
+                        (new Date().getTime() - new Date(sale.createdAt).getTime()) / 60000
+                      )
+                    );
+                    const timeString =
+                      timeDiffMins < 60
+                        ? `${timeDiffMins} min ago`
+                        : `${Math.round(timeDiffMins / 60)} hours ago`;
+
+                    return (
+                      <div
+                        key={sale.id}
+                        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl hover:bg-slate-50 transition border border-transparent hover:border-slate-100"
+                      >
+                        {/* Invoice & Patient */}
+                        <div className="flex items-center gap-3 min-w-[200px]">
+                          <span
+                            className={`px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider uppercase shrink-0 ${badge.bg} ${badge.text}`}
+                          >
+                            #{sale.invoiceNumber}
+                          </span>
+                          <div className="min-w-0">
+                            <p className="text-sm font-bold text-slate-800 truncate">
+                              {sale.patient?.name || sale.customerName || 'Pelanggan Umum'}
+                            </p>
+                            <p className="text-[11px] text-slate-400 truncate">
+                              {sale.items.length} item obat dibeli
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Amount */}
+                        <div className="flex items-center gap-2">
+                          <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                            <Receipt className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-slate-400 block font-semibold leading-none">
+                              Amount
+                            </span>
+                            <span className="text-sm font-extrabold text-slate-800 leading-tight">
+                              {formatRupiah(sale.totalAmount)}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Time */}
+                        <div className="text-xs text-slate-400 font-medium">
+                          {timeString}
+                        </div>
+
+                        {/* Actions (Printer & Menu) */}
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <Link
+                            href={`/transaksi?invoice=${sale.invoiceNumber}`}
+                            title="Cetak Struk Transaksi"
+                            className="w-8 h-8 rounded-lg bg-slate-50 hover:bg-blue-50 text-slate-500 hover:text-blue-600 flex items-center justify-center transition border border-slate-200/60"
+                          >
+                            <Printer className="w-4 h-4" />
+                          </Link>
+                          <button
+                            type="button"
+                            className="w-8 h-8 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition border border-slate-200/60"
+                          >
+                            <MoreHorizontal className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
             </div>
 
-            <div className="flex items-center gap-2.5 self-start md:self-auto">
-              <Link
-                href="/pasien"
-                className="px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-semibold text-xs tracking-wide transition border border-emerald-600/70 shadow-xs"
-              >
-                + Daftar Pasien
-              </Link>
-              <Link
-                href="/kasir"
-                className="px-4 py-2.5 rounded-xl bg-white text-emerald-900 font-bold text-xs tracking-wide hover:bg-emerald-50 transition shadow-sm"
-              >
-                + Kasir Penjualan
-              </Link>
+            {/* Pagination footer */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-5 mt-4 border-t border-slate-100 text-xs text-slate-500">
+              <p>
+                Showing 1-{Math.min(5, recentSales.length)} from {totalSaleCount} Data
+              </p>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  className="w-7 h-7 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-500 transition"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center shadow-xs"
+                >
+                  1
+                </button>
+                <button
+                  type="button"
+                  className="w-7 h-7 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 transition"
+                >
+                  2
+                </button>
+                <button
+                  type="button"
+                  className="w-7 h-7 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 transition"
+                >
+                  3
+                </button>
+                <button
+                  type="button"
+                  className="w-7 h-7 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-500 transition"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Sub-cards inside Hero Banner (Matching Reference Translucent Cards) */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
-            <div className="p-4 rounded-xl bg-white/10 border border-white/15 backdrop-blur-xs">
-              <span className="text-xs text-emerald-200 block uppercase font-medium">
-                Transaksi Hari Ini
-              </span>
-              <p className="text-2xl font-bold mt-1 tracking-tight">{todayCount}</p>
-              <span className="text-xs text-emerald-300 mt-1 block font-medium">
-                Penjualan Kasir
-              </span>
+          {/* Right Column: Statistics Chart (4 cols out of 12 = ~33%) */}
+          <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-slate-100/90 shadow-xs flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-base font-bold text-slate-800">Statistics</h2>
+                <div className="flex items-center gap-2 text-[10px] text-slate-400 font-semibold">
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-blue-600"></span> Over
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-slate-300"></span> Under
+                  </span>
+                </div>
+              </div>
+
+              {/* Graphical Multi-color Dual Vertical Bar Visual */}
+              <div className="h-52 w-full pt-4 pb-2 flex items-center justify-between px-2">
+                {/* Bar 1: Green */}
+                <div className="flex flex-col items-center h-full justify-center">
+                  <div className="w-2.5 h-16 bg-emerald-500 rounded-full mb-1"></div>
+                  <div className="w-2.5 h-6 bg-slate-200 rounded-full"></div>
+                </div>
+
+                {/* Bar 2: Coral Red High */}
+                <div className="flex flex-col items-center h-full justify-center">
+                  <div className="w-2.5 h-28 bg-rose-500 rounded-full mb-1"></div>
+                  <div className="w-2.5 h-8 bg-blue-600 rounded-full"></div>
+                </div>
+
+                {/* Bar 3: Blue Tall */}
+                <div className="flex flex-col items-center h-full justify-center">
+                  <div className="w-2.5 h-20 bg-amber-400 rounded-full mb-1"></div>
+                  <div className="w-2.5 h-12 bg-blue-600 rounded-full"></div>
+                </div>
+
+                {/* Bar 4: Cyan Mid */}
+                <div className="flex flex-col items-center h-full justify-center">
+                  <div className="w-2.5 h-24 bg-sky-500 rounded-full mb-1"></div>
+                  <div className="w-2.5 h-10 bg-slate-200 rounded-full"></div>
+                </div>
+
+                {/* Bar 5: Amber */}
+                <div className="flex flex-col items-center h-full justify-center">
+                  <div className="w-2.5 h-32 bg-rose-500 rounded-full mb-1"></div>
+                  <div className="w-2.5 h-14 bg-blue-600 rounded-full"></div>
+                </div>
+
+                {/* Bar 6: Blue */}
+                <div className="flex flex-col items-center h-full justify-center">
+                  <div className="w-2.5 h-14 bg-sky-500 rounded-full mb-1"></div>
+                  <div className="w-2.5 h-8 bg-blue-600 rounded-full"></div>
+                </div>
+              </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-white/10 border border-white/15 backdrop-blur-xs">
-              <span className="text-xs text-emerald-200 block uppercase font-medium">
-                Pasien Baru Hari Ini
-              </span>
-              <p className="text-2xl font-bold mt-1 tracking-tight">{newPatientsToday}</p>
-              <span className="text-xs text-emerald-300 mt-1 block font-medium">
-                Terdaftar di Rekam Medis
-              </span>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white/10 border border-white/15 backdrop-blur-xs">
-              <span className="text-xs text-emerald-200 block uppercase font-medium">
-                Pendapatan Hari Ini
-              </span>
-              <p className="text-xl md:text-2xl font-bold mt-1 truncate tracking-tight">
-                {formatRupiah(todayRevenue)}
-              </p>
-              <span className="text-xs text-emerald-300 mt-1 block font-medium">
-                Kas Masuk Hari Ini
-              </span>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white/10 border border-white/15 backdrop-blur-xs">
-              <span className="text-xs text-emerald-200 block uppercase font-medium">
-                Kesehatan Stok Obat
-              </span>
-              <p className="text-2xl font-bold mt-1 tracking-tight">{stockSafetyRate}%</p>
-              <span className="text-xs text-emerald-300 mt-1 block font-medium">
-                {lowStockMedicines.length > 0 ? `${lowStockMedicines.length} Perlu Restock` : 'Katalog Stok Aman'}
-              </span>
+            {/* Bottom 4 Color Legend Dots matching Pelio design */}
+            <div className="grid grid-cols-2 gap-2 pt-4 border-t border-slate-100 text-xs">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span className="text-slate-600 font-medium text-[11px]">Pasien</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+                <span className="text-slate-600 font-medium text-[11px]">Penjualan</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                <span className="text-slate-600 font-medium text-[11px]">Stok Masuk</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-rose-500"></span>
+                <span className="text-slate-600 font-medium text-[11px]">Resep</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* 2. STAT CARDS ROW (4 Cards with Progress Bars matching Reference UI) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Card 1: Total Pasien */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm hover:border-emerald-300 transition">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs px-2.5 py-1 rounded bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200 uppercase tracking-wide">
-                Rekam Medis
-              </span>
-              <span className="text-xs text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold border border-emerald-200">
-                Aktif
-              </span>
-            </div>
-            <p className="text-3xl font-bold text-slate-800 tracking-tight">{totalPatients}</p>
-            <p className="text-xs text-slate-500 font-medium mt-1">Total Pasien Terdaftar</p>
-            <div className="w-full bg-slate-100 h-1.5 rounded-full mt-3 overflow-hidden">
-              <div className="bg-emerald-600 h-full rounded-full" style={{ width: '85%' }}></div>
-            </div>
-          </div>
-
-          {/* Card 2: Master Obat */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm hover:border-emerald-300 transition">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs px-2.5 py-1 rounded bg-teal-50 text-teal-800 font-semibold border border-teal-200 uppercase tracking-wide">
-                Farmasi
-              </span>
-              <span className="text-xs text-teal-700 bg-teal-50 px-2 py-0.5 rounded font-semibold border border-teal-200">
-                {totalMedicines} Item
-              </span>
-            </div>
-            <p className="text-3xl font-bold text-slate-800 tracking-tight">{totalMedicines}</p>
-            <p className="text-xs text-slate-500 font-medium mt-1">Total Produk Obat</p>
-            <div className="w-full bg-slate-100 h-1.5 rounded-full mt-3 overflow-hidden">
-              <div className="bg-teal-600 h-full rounded-full" style={{ width: `${stockSafetyRate}%` }}></div>
-            </div>
-          </div>
-
-          {/* Card 3: Total Transaksi */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm hover:border-emerald-300 transition">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs px-2.5 py-1 rounded bg-amber-50 text-amber-800 font-semibold border border-amber-200 uppercase tracking-wide">
-                Transaksi
-              </span>
-              <span className="text-xs text-amber-800 bg-amber-50 px-2 py-0.5 rounded font-semibold border border-amber-200">
-                Selesai
-              </span>
-            </div>
-            <p className="text-3xl font-bold text-slate-800 tracking-tight">{totalSaleCount}</p>
-            <p className="text-xs text-slate-500 font-medium mt-1">Total Transaksi Kasir</p>
-            <div className="w-full bg-slate-100 h-1.5 rounded-full mt-3 overflow-hidden">
-              <div className="bg-amber-500 h-full rounded-full" style={{ width: '90%' }}></div>
-            </div>
-          </div>
-
-          {/* Card 4: Total Omzet */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm hover:border-emerald-300 transition">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs px-2.5 py-1 rounded bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200 uppercase tracking-wide">
-                Pendapatan
-              </span>
-              <span className="text-xs text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded font-semibold border border-emerald-200">
-                IDR
-              </span>
-            </div>
-            <p className="text-2xl font-bold text-slate-800 tracking-tight truncate">
-              {formatRupiah(totalRevenue)}
-            </p>
-            <p className="text-xs text-slate-500 font-medium mt-1">Total Omzet Penjualan</p>
-            <div className="w-full bg-slate-100 h-1.5 rounded-full mt-3 overflow-hidden">
-              <div className="bg-emerald-700 h-full rounded-full" style={{ width: '95%' }}></div>
-            </div>
-          </div>
-        </div>
-
-        {/* 3. MIDDLE SECTION: 2 COLUMNS (Analisis Performa + Aktivitas Terkini) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Revenue & Operations Analytics (8 Cols) */}
-          <div className="lg:col-span-8 bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 mb-5">
-              <div>
-                <h3 className="font-bold text-slate-800 text-base">Analisis Arus Kas & Penjualan Farmasi</h3>
-                <p className="text-xs text-slate-500 mt-0.5">Ringkasan performa keuangan dan pelayanan obat</p>
-              </div>
-              <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
-                <span className="px-3 py-1 rounded-lg bg-emerald-700 text-white text-xs font-semibold shadow-xs">
-                  Semua Data
-                </span>
-                <span className="px-3 py-1 rounded-lg text-slate-600 text-xs font-medium">
-                  Tahun Ini
-                </span>
-              </div>
-            </div>
-
-            {/* Horizontal progress indicators */}
-            <div className="space-y-4 mb-6">
-              <div>
-                <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className="font-semibold text-slate-700">Total Akumulasi Penjualan Obat</span>
-                  <span className="font-bold text-slate-900">{formatRupiah(totalRevenue)}</span>
-                </div>
-                <div className="w-full bg-slate-100 h-6 rounded-lg overflow-hidden p-0.5">
-                  <div className="bg-emerald-700 h-full rounded-md flex items-center justify-end pr-2 text-[10px] font-bold text-white" style={{ width: '85%' }}>
-                    85%
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className="font-semibold text-slate-700">Tingkat Ketersediaan Stok Farmasi</span>
-                  <span className="font-bold text-emerald-700">{stockSafetyRate}% Kategori Aman</span>
-                </div>
-                <div className="w-full bg-slate-100 h-6 rounded-lg overflow-hidden p-0.5">
-                  <div className="bg-teal-600 h-full rounded-md flex items-center justify-end pr-2 text-[10px] font-bold text-white" style={{ width: `${stockSafetyRate}%` }}>
-                    {stockSafetyRate}%
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className="font-semibold text-slate-700">Penerimaan Kas Masuk Hari Ini</span>
-                  <span className="font-bold text-slate-900">{formatRupiah(todayRevenue)}</span>
-                </div>
-                <div className="w-full bg-slate-100 h-6 rounded-lg overflow-hidden p-0.5">
-                  <div className="bg-emerald-600 h-full rounded-md flex items-center justify-end pr-2 text-[10px] font-bold text-white" style={{ width: todayRevenue > 0 ? '70%' : '5%' }}>
-                    {todayRevenue > 0 ? 'Aktif' : '0'}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 4 Metrics Summary Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-100">
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
-                <span className="text-[11px] text-slate-500 font-medium block">Total Omzet</span>
-                <p className="text-sm font-bold text-slate-800 mt-1 truncate">{formatRupiah(totalRevenue)}</p>
-              </div>
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
-                <span className="text-[11px] text-slate-500 font-medium block">Rata-rata/Faktur</span>
-                <p className="text-sm font-bold text-slate-800 mt-1 truncate">{formatRupiah(avgPerSale)}</p>
-              </div>
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
-                <span className="text-[11px] text-slate-500 font-medium block">Hari Ini</span>
-                <p className="text-sm font-bold text-emerald-700 mt-1 truncate">{formatRupiah(todayRevenue)}</p>
-              </div>
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
-                <span className="text-[11px] text-slate-500 font-medium block">Faktur Selesai</span>
-                <p className="text-sm font-bold text-slate-800 mt-1">{totalSaleCount} Transaksi</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Live Activity (4 Cols, matching reference UI) */}
-          <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        {/* ROW 3: VIRTUAL CARD & SPARKLINE | BALANCE DETAILS | ACTIVITY */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Col 1: Digital Clinic Virtual Card + Trend Sparkline */}
+          <div className="bg-white rounded-2xl p-6 border border-slate-100/90 shadow-xs flex flex-col justify-between">
+            {/* Visual Credit Card */}
+            <div className="w-full rounded-2xl bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-600 text-white p-5 shadow-md shadow-blue-500/20 relative overflow-hidden">
+              <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h3 className="font-bold text-slate-800 text-base">Aktivitas Terkini</h3>
-                  <p className="text-xs text-slate-500 mt-0.5">Pembaruan transaksi real-time</p>
+                  <span className="text-xs text-blue-100 block font-medium">Balance</span>
+                  <span className="text-2xl font-black tracking-tight">
+                    {formatRupiah(todayRevenue || totalRevenue)}
+                  </span>
                 </div>
-                <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                  <span>Terkini</span>
+                <div className="text-xs text-blue-100 font-mono tracking-widest">
+                  •••• •••• 3456
+                </div>
+              </div>
+
+              <div className="flex justify-between items-end text-xs">
+                <div>
+                  <p className="text-[10px] text-blue-200">Valid Thru</p>
+                  <p className="font-semibold">12/28</p>
+                  <p className="text-[10px] text-blue-200 mt-1">Nama Klinik</p>
+                  <p className="font-bold tracking-wide uppercase truncate max-w-[140px]">
+                    {clinic.name}
+                  </p>
+                </div>
+                {/* Mastercard Overlapping Circles */}
+                <div className="flex items-center -space-x-3">
+                  <div className="w-8 h-8 rounded-full bg-white/40"></div>
+                  <div className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-xs"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom: Transaction Count & Red Sparkline Wave */}
+            <div className="flex items-center justify-between pt-5 mt-4 border-t border-slate-100">
+              <div>
+                <span className="text-xs text-slate-400 block font-medium">Transactions</span>
+                <span className="text-xl font-black text-slate-800">
+                  {totalSaleCount.toLocaleString('id-ID')}
                 </span>
               </div>
-
-              {recentSales.length === 0 ? (
-                <div className="text-center py-12 text-slate-400 text-xs font-medium">
-                  Belum ada transaksi tercatat
-                </div>
-              ) : (
-                <div className="space-y-3.5">
-                  {recentSales.map((sale) => (
-                    <div key={sale.id} className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs">
-                      <div className="flex items-center justify-between font-bold text-slate-800">
-                        <span className="truncate max-w-[130px]">{sale.customerName}</span>
-                        <span className="text-emerald-700">{formatRupiah(sale.totalAmount)}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-slate-500 text-[11px] mt-1">
-                        <span>Faktur: {sale.invoiceNumber}</span>
-                        <span className="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 font-semibold">{sale.paymentMethod}</span>
-                      </div>
-                      <div className="text-[10px] text-slate-400 mt-1">
-                        Kasir: {sale.cashier.name} • {formatDateTimeIndo(sale.createdAt)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="pt-4 border-t border-slate-100 mt-4">
-              <Link
-                href="/transaksi"
-                className="block w-full py-2 text-center text-xs font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
-              >
-                Lihat Semua Riwayat Transaksi &rarr;
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* 4. QUICK ACTIONS & TOP MEDICINES */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Quick Actions (8 Cols) */}
-          <div className="lg:col-span-8 space-y-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-base font-bold text-slate-800">Aksi Cepat Petugas</h3>
-                <p className="text-xs text-slate-500 mt-0.5">Pintasan menuju modul pelayanan utama klinik</p>
+              {/* Red/Coral Wave Trend Sparkline matching Pelio */}
+              <div className="w-32 h-10">
+                <svg viewBox="0 0 120 40" fill="none" className="w-full h-full">
+                  <path
+                    d="M5 25 C25 20, 35 35, 55 25 C75 15, 85 30, 115 15"
+                    stroke="#ff5d55"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </div>
-              <span className="text-xs text-slate-500 font-medium">4 Modul Aktif</span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <Link
-                href="/kasir"
-                className="p-5 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white shadow-xs transition group"
-              >
-                <div className="text-xs font-semibold text-emerald-200 mb-1 uppercase tracking-wide">
-                  Kasir Apotek
-                </div>
-                <h4 className="text-base font-bold">Kasir Penjualan Obat</h4>
-                <p className="text-xs text-emerald-100/90 mt-1 leading-relaxed">
-                  Keranjang belanja, hitung total & kembalian, cetak struk pembayaran
-                </p>
-              </Link>
-
-              <Link
-                href="/pasien"
-                className="p-5 rounded-2xl bg-teal-700 hover:bg-teal-800 text-white shadow-xs transition group"
-              >
-                <div className="text-xs font-semibold text-teal-200 mb-1 uppercase tracking-wide">
-                  Pendaftaran
-                </div>
-                <h4 className="text-base font-bold">Pendaftaran Pasien Baru</h4>
-                <p className="text-xs text-teal-100/90 mt-1 leading-relaxed">
-                  Input data identitas pasien & pembuatan otomatis No. Rekam Medis
-                </p>
-              </Link>
-
-              <Link
-                href="/obat"
-                className="p-5 rounded-2xl bg-emerald-800 hover:bg-emerald-900 text-white shadow-xs transition group"
-              >
-                <div className="text-xs font-semibold text-emerald-200 mb-1 uppercase tracking-wide">
-                  Master Farmasi
-                </div>
-                <h4 className="text-base font-bold">Katalog Obat & Stok</h4>
-                <p className="text-xs text-emerald-100/90 mt-1 leading-relaxed">
-                  Kelola obat, satuan, harga jual, dan penyesuaian stok opname
-                </p>
-              </Link>
-
-              <Link
-                href="/pengaturan"
-                className="p-5 rounded-2xl bg-slate-800 hover:bg-slate-900 text-white shadow-xs transition group"
-              >
-                <div className="text-xs font-semibold text-slate-300 mb-1 uppercase tracking-wide">
-                  Konfigurasi
-                </div>
-                <h4 className="text-base font-bold">Pengaturan Identitas Klinik</h4>
-                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                  Ganti nama klinik, alamat, telepon, dan teks footer struk kasir
-                </p>
-              </Link>
             </div>
           </div>
 
-          {/* Top Medicines (4 Cols, matching Top Sellers in reference UI) */}
-          <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-              <div>
-                <h3 className="font-bold text-slate-800 text-base">Obat Teratas</h3>
-                <p className="text-xs text-slate-500 mt-0.5">Produk formularium unggulan</p>
-              </div>
-              <Link href="/obat" className="text-xs font-bold text-emerald-700 hover:underline">
-                Lihat Semua
-              </Link>
-            </div>
-
-            <div className="space-y-3">
-              {topMedicines.map((m, idx) => {
-                const rankColors = [
-                  'bg-amber-500 text-white',
-                  'bg-slate-500 text-white',
-                  'bg-amber-700 text-white',
-                ];
-                return (
-                  <div key={m.id} className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <span className={`w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${rankColors[idx] || 'bg-slate-400 text-white'}`}>
-                        {idx + 1}
-                      </span>
-                      <div className="min-w-0">
-                        <p className="font-bold text-slate-800 text-xs truncate">{m.name}</p>
-                        <p className="text-[10px] text-slate-500 mt-0.5">
-                          {m.category?.name || 'Umum'} • Stok: {m.stock} {m.unit}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <span className="font-bold text-xs text-slate-900 block">
-                        {formatRupiah(m.sellPrice)}
-                      </span>
-                      <span className="text-[10px] text-emerald-700 font-semibold">Tersedia</span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* 5. PENDING ACTIONS / PERHATIAN SISTEM (Matching reference UI bottom alert cards) */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm">
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
+          {/* Col 2: Balance Details with 2x2 Metric Grid */}
+          <div className="bg-white rounded-2xl p-6 border border-slate-100/90 shadow-xs flex flex-col justify-between">
             <div>
-              <h3 className="font-bold text-slate-800 text-base">Perhatian & Tindakan Sistem</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Item penting yang memerlukan pemeriksaan berkala</p>
+              <h2 className="text-base font-bold text-slate-800 mb-1">
+                Balance Details
+              </h2>
+              <span className="text-xs text-slate-400 block">Total Balance</span>
+              <p className="text-2xl font-black text-slate-800 tracking-tight mt-0.5 mb-5">
+                {formatRupiah(totalRevenue)}
+              </p>
+
+              {/* 2x2 Metric Grid */}
+              <div className="grid grid-cols-2 gap-3">
+                {/* Box 1: Blue Active Pill */}
+                <div className="bg-blue-600 text-white rounded-xl p-3.5 shadow-xs">
+                  <span className="text-[11px] text-blue-100 block font-medium">
+                    Hari Ini
+                  </span>
+                  <p className="text-sm font-extrabold mt-0.5 truncate" title={formatRupiah(todayRevenue)}>
+                    {formatRupiah(todayRevenue)}
+                  </p>
+                </div>
+
+                {/* Box 2: Light Gray */}
+                <div className="bg-slate-50 border border-slate-100 rounded-xl p-3.5">
+                  <span className="text-[11px] text-slate-400 block font-medium">
+                    Rata-rata Transaksi
+                  </span>
+                  <p className="text-sm font-extrabold text-slate-800 mt-0.5 truncate" title={formatRupiah(avgPerSale)}>
+                    {formatRupiah(avgPerSale)}
+                  </p>
+                </div>
+
+                {/* Box 3: Light Gray */}
+                <div className="bg-slate-50 border border-slate-100 rounded-xl p-3.5">
+                  <span className="text-[11px] text-slate-400 block font-medium">
+                    Obat Kritis
+                  </span>
+                  <p className="text-sm font-extrabold text-slate-800 mt-0.5">
+                    {lowStockMedicines.length} Item
+                  </p>
+                </div>
+
+                {/* Box 4: Light Gray */}
+                <div className="bg-slate-50 border border-slate-100 rounded-xl p-3.5">
+                  <span className="text-[11px] text-slate-400 block font-medium">
+                    Pasien Baru
+                  </span>
+                  <p className="text-sm font-extrabold text-slate-800 mt-0.5">
+                    {newPatientsToday} Pasien
+                  </p>
+                </div>
+              </div>
             </div>
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
-              {lowStockMedicines.length > 0 ? `${lowStockMedicines.length} Peringatan Stok` : 'Semua Normal'}
-            </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Alert 1: Stok Obat Menipis */}
-            <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-amber-900 uppercase">Stok Menipis</span>
-                  <span className="w-5 h-5 rounded-full bg-amber-600 text-white text-[11px] font-bold flex items-center justify-center">
-                    {lowStockMedicines.length}
-                  </span>
-                </div>
-                <h4 className="font-bold text-sm text-slate-800">Peringatan Batas Minimum</h4>
-                <p className="text-xs text-slate-600 mt-1">
-                  {lowStockMedicines.length > 0
-                    ? `${lowStockMedicines.length} jenis obat telah mencapai atau berada di bawah batas minimum.`
-                    : 'Semua obat dalam status stok aman di atas batas minimum.'}
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-amber-200/60">
-                <Link
-                  href="/obat"
-                  className="block w-full py-2 text-center rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold transition"
-                >
-                  Periksa & Restock Obat
-                </Link>
-              </div>
-            </div>
+          {/* Col 3: Activity with 3 Rounded Vertical Pill Meters */}
+          <div className="bg-white rounded-2xl p-6 border border-slate-100/90 shadow-xs flex flex-col justify-between">
+            <div>
+              <span className="text-xs text-slate-400 block font-medium">Activity</span>
+              <p className="text-2xl font-black text-slate-800 tracking-tight mt-0.5 mb-5">
+                {(totalPatients + totalSaleCount).toLocaleString('id-ID')} Pelayanan
+              </p>
 
-            {/* Alert 2: Pasien Terdaftar Baru */}
-            <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-emerald-900 uppercase">Pasien Hari Ini</span>
-                  <span className="w-5 h-5 rounded-full bg-emerald-600 text-white text-[11px] font-bold flex items-center justify-center">
-                    {newPatientsToday}
-                  </span>
+              {/* 3 Pill Meters + Shift Legend */}
+              <div className="flex items-center justify-between gap-4 pt-2">
+                {/* Meter 1: Emerald (Sunday) */}
+                <div className="flex flex-col items-center">
+                  <span className="text-xs font-bold text-slate-700 mb-2">287</span>
+                  <div className="w-7 h-28 rounded-full bg-emerald-100 flex flex-col justify-end overflow-hidden p-1">
+                    <div className="w-full h-20 bg-emerald-500 rounded-full"></div>
+                  </div>
+                  <span className="text-xs text-slate-400 mt-2 font-medium">Min</span>
                 </div>
-                <h4 className="font-bold text-sm text-slate-800">Kunjungan Pasien Baru</h4>
-                <p className="text-xs text-slate-600 mt-1">
-                  {newPatientsToday > 0
-                    ? `${newPatientsToday} pasien baru terdaftar dengan nomor rekam medis otomatis hari ini.`
-                    : 'Belum ada pendaftaran pasien baru untuk hari ini.'}
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-emerald-200/60">
-                <Link
-                  href="/pasien"
-                  className="block w-full py-2 text-center rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold transition"
-                >
-                  Buka Pendaftaran Pasien
-                </Link>
-              </div>
-            </div>
 
-            {/* Alert 3: Database & Backup */}
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-slate-700 uppercase">Volume Database</span>
-                  <span className="w-5 h-5 rounded-full bg-slate-700 text-white text-[11px] font-bold flex items-center justify-center">
-                    OK
-                  </span>
+                {/* Meter 2: Coral Red (Monday) */}
+                <div className="flex flex-col items-center">
+                  <span className="text-xs font-bold text-slate-700 mb-2">312</span>
+                  <div className="w-7 h-28 rounded-full bg-rose-100 flex flex-col justify-end overflow-hidden p-1">
+                    <div className="w-full h-24 bg-rose-500 rounded-full"></div>
+                  </div>
+                  <span className="text-xs text-slate-400 mt-2 font-medium">Sen</span>
                 </div>
-                <h4 className="font-bold text-sm text-slate-800">Penyimpanan Docker PostgreSQL</h4>
-                <p className="text-xs text-slate-600 mt-1">
-                  Database berjalan normal dan data disimpan persisten di Docker volume.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-slate-200">
-                <Link
-                  href="/pengaturan"
-                  className="block w-full py-2 text-center rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold transition"
-                >
-                  Kelola Pengaturan Sistem
-                </Link>
+
+                {/* Meter 3: Sky Blue (Tuesday) */}
+                <div className="flex flex-col items-center">
+                  <span className="text-xs font-bold text-slate-700 mb-2">176</span>
+                  <div className="w-7 h-28 rounded-full bg-sky-100 flex flex-col justify-end overflow-hidden p-1">
+                    <div className="w-full h-14 bg-sky-500 rounded-full"></div>
+                  </div>
+                  <span className="text-xs text-slate-400 mt-2 font-medium">Sel</span>
+                </div>
+
+                {/* Shift Labels Right */}
+                <div className="space-y-3 pl-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-4 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span className="text-[11px] font-semibold text-slate-600">Pagi / Shift 1</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-4 h-1.5 rounded-full bg-rose-500"></span>
+                    <span className="text-[11px] font-semibold text-slate-600">Siang / Shift 2</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-4 h-1.5 rounded-full bg-sky-500"></span>
+                    <span className="text-[11px] font-semibold text-slate-600">Malam / Shift 3</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
