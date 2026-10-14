@@ -80,13 +80,13 @@ export default async function DashboardPage() {
   const totalSaleCount = allSales._count.id || 0;
   const avgPerSale = totalSaleCount > 0 ? Math.round(totalRevenue / totalSaleCount) : 0;
 
-  // Invoice badge colors matching Pelio dashboard
+  // Invoice badge colors matching Pelio dashboard with emerald primary
   const badgeColors = [
-    { bg: 'bg-blue-600', text: 'text-white' },
+    { bg: 'bg-emerald-600', text: 'text-white' },
     { bg: 'bg-amber-400', text: 'text-amber-950' },
-    { bg: 'bg-emerald-500', text: 'text-white' },
+    { bg: 'bg-sky-500', text: 'text-white' },
     { bg: 'bg-rose-500', text: 'text-white' },
-    { bg: 'bg-indigo-600', text: 'text-white' },
+    { bg: 'bg-teal-600', text: 'text-white' },
   ];
 
   return (
@@ -177,20 +177,20 @@ export default async function DashboardPage() {
         {/* QUICK SHORTCUT BAR */}
         <div className="bg-white rounded-2xl p-4 border border-slate-100/80 shadow-xs flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
-            <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+            <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
             <span>Akses Cepat Pelayanan:</span>
           </div>
           <div className="flex items-center flex-wrap gap-2.5">
             <Link
               href="/pasien"
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition"
             >
-              <UserPlus className="w-4 h-4" />
+              <UserPlus className="w-4 h-4 text-emerald-700" />
               <span>Daftar Pasien Baru</span>
             </Link>
             <Link
               href="/kasir"
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 shadow-sm transition"
             >
               <ShoppingCart className="w-4 h-4" />
               <span>Buka Kasir Penjualan</span>
@@ -216,7 +216,7 @@ export default async function DashboardPage() {
                 </h2>
                 <Link
                   href="/transaksi"
-                  className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                  className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
                 >
                   <span>Lihat Semua</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -290,7 +290,7 @@ export default async function DashboardPage() {
                           <Link
                             href={`/transaksi?invoice=${sale.invoiceNumber}`}
                             title="Cetak Struk Transaksi"
-                            className="w-8 h-8 rounded-lg bg-slate-50 hover:bg-blue-50 text-slate-500 hover:text-blue-600 flex items-center justify-center transition border border-slate-200/60"
+                            className="w-8 h-8 rounded-lg bg-slate-50 hover:bg-emerald-50 text-slate-500 hover:text-emerald-600 flex items-center justify-center transition border border-slate-200/60"
                           >
                             <Printer className="w-4 h-4" />
                           </Link>
@@ -322,7 +322,7 @@ export default async function DashboardPage() {
                 </button>
                 <button
                   type="button"
-                  className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center shadow-xs"
+                  className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold flex items-center justify-center shadow-xs"
                 >
                   1
                 </button>
@@ -355,7 +355,7 @@ export default async function DashboardPage() {
                 <h2 className="text-base font-bold text-slate-800">Statistics</h2>
                 <div className="flex items-center gap-2 text-[10px] text-slate-400 font-semibold">
                   <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-blue-600"></span> Over
+                    <span className="w-2 h-2 rounded-full bg-emerald-600"></span> Over
                   </span>
                   <span className="flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-slate-300"></span> Under
@@ -374,13 +374,13 @@ export default async function DashboardPage() {
                 {/* Bar 2: Coral Red High */}
                 <div className="flex flex-col items-center h-full justify-center">
                   <div className="w-2.5 h-28 bg-rose-500 rounded-full mb-1"></div>
-                  <div className="w-2.5 h-8 bg-blue-600 rounded-full"></div>
+                  <div className="w-2.5 h-8 bg-emerald-600 rounded-full"></div>
                 </div>
 
                 {/* Bar 3: Blue Tall */}
                 <div className="flex flex-col items-center h-full justify-center">
                   <div className="w-2.5 h-20 bg-amber-400 rounded-full mb-1"></div>
-                  <div className="w-2.5 h-12 bg-blue-600 rounded-full"></div>
+                  <div className="w-2.5 h-12 bg-emerald-600 rounded-full"></div>
                 </div>
 
                 {/* Bar 4: Cyan Mid */}
@@ -392,13 +392,13 @@ export default async function DashboardPage() {
                 {/* Bar 5: Amber */}
                 <div className="flex flex-col items-center h-full justify-center">
                   <div className="w-2.5 h-32 bg-rose-500 rounded-full mb-1"></div>
-                  <div className="w-2.5 h-14 bg-blue-600 rounded-full"></div>
+                  <div className="w-2.5 h-14 bg-emerald-600 rounded-full"></div>
                 </div>
 
                 {/* Bar 6: Blue */}
                 <div className="flex flex-col items-center h-full justify-center">
                   <div className="w-2.5 h-14 bg-sky-500 rounded-full mb-1"></div>
-                  <div className="w-2.5 h-8 bg-blue-600 rounded-full"></div>
+                  <div className="w-2.5 h-8 bg-emerald-600 rounded-full"></div>
                 </div>
               </div>
             </div>
@@ -410,7 +410,7 @@ export default async function DashboardPage() {
                 <span className="text-slate-600 font-medium text-[11px]">Pasien</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+                <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
                 <span className="text-slate-600 font-medium text-[11px]">Penjualan</span>
               </div>
               <div className="flex items-center gap-2">
@@ -430,24 +430,24 @@ export default async function DashboardPage() {
           {/* Col 1: Digital Clinic Virtual Card + Trend Sparkline */}
           <div className="bg-white rounded-2xl p-6 border border-slate-100/90 shadow-xs flex flex-col justify-between">
             {/* Visual Credit Card */}
-            <div className="w-full rounded-2xl bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-600 text-white p-5 shadow-md shadow-blue-500/20 relative overflow-hidden">
+            <div className="w-full rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-emerald-800 text-white p-5 shadow-md shadow-emerald-500/20 relative overflow-hidden">
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <span className="text-xs text-blue-100 block font-medium">Balance</span>
+                  <span className="text-xs text-emerald-100 block font-medium">Balance</span>
                   <span className="text-2xl font-black tracking-tight">
                     {formatRupiah(todayRevenue || totalRevenue)}
                   </span>
                 </div>
-                <div className="text-xs text-blue-100 font-mono tracking-widest">
+                <div className="text-xs text-emerald-100 font-mono tracking-widest">
                   •••• •••• 3456
                 </div>
               </div>
 
               <div className="flex justify-between items-end text-xs">
                 <div>
-                  <p className="text-[10px] text-blue-200">Valid Thru</p>
+                  <p className="text-[10px] text-emerald-200">Valid Thru</p>
                   <p className="font-semibold">12/28</p>
-                  <p className="text-[10px] text-blue-200 mt-1">Nama Klinik</p>
+                  <p className="text-[10px] text-emerald-200 mt-1">Nama Klinik</p>
                   <p className="font-bold tracking-wide uppercase truncate max-w-[140px]">
                     {clinic.name}
                   </p>
@@ -495,9 +495,9 @@ export default async function DashboardPage() {
 
               {/* 2x2 Metric Grid */}
               <div className="grid grid-cols-2 gap-3">
-                {/* Box 1: Blue Active Pill */}
-                <div className="bg-blue-600 text-white rounded-xl p-3.5 shadow-xs">
-                  <span className="text-[11px] text-blue-100 block font-medium">
+                {/* Box 1: Emerald Active Pill */}
+                <div className="bg-emerald-600 text-white rounded-xl p-3.5 shadow-xs">
+                  <span className="text-[11px] text-emerald-100 block font-medium">
                     Hari Ini
                   </span>
                   <p className="text-sm font-extrabold mt-0.5 truncate" title={formatRupiah(todayRevenue)}>

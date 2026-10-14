@@ -88,7 +88,7 @@ function LoginForm() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="admin / pendaftaran / kasir"
-                  className="w-full pl-4 pr-10 py-2.5 text-sm rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium bg-slate-50 focus:bg-white transition"
+                  className="w-full pl-4 pr-10 py-2.5 text-sm rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-medium bg-slate-50 focus:bg-white transition"
                 />
                 <User className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
               </div>
@@ -105,7 +105,7 @@ function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-4 pr-10 py-2.5 text-sm rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium bg-slate-50 focus:bg-white transition"
+                  className="w-full pl-4 pr-10 py-2.5 text-sm rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-medium bg-slate-50 focus:bg-white transition"
                 />
                 <Lock className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
               </div>
@@ -114,7 +114,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm tracking-wide shadow-md shadow-blue-500/25 hover:shadow-lg transition cursor-pointer disabled:opacity-50"
+              className="w-full mt-2 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm tracking-wide shadow-md shadow-emerald-500/25 hover:shadow-lg transition cursor-pointer disabled:opacity-50"
             >
               <span>{loading ? 'Memverifikasi...' : 'Masuk ke Sistem'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -130,21 +130,21 @@ function LoginForm() {
               <button
                 type="button"
                 onClick={() => handleQuickLogin('admin', 'admin123')}
-                className="px-2.5 py-2 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-600 border border-slate-200/80 hover:border-blue-200 text-xs text-center font-bold transition cursor-pointer"
+                className="px-2.5 py-2 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200/80 hover:border-emerald-200 text-xs text-center font-bold transition cursor-pointer"
               >
                 Admin
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('pendaftaran', 'daftar123')}
-                className="px-2.5 py-2 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-600 border border-slate-200/80 hover:border-blue-200 text-xs text-center font-bold transition cursor-pointer"
+                className="px-2.5 py-2 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200/80 hover:border-emerald-200 text-xs text-center font-bold transition cursor-pointer"
               >
                 Pendaftaran
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('kasir', 'kasir123')}
-                className="px-2.5 py-2 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-600 border border-slate-200/80 hover:border-blue-200 text-xs text-center font-bold transition cursor-pointer"
+                className="px-2.5 py-2 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200/80 hover:border-emerald-200 text-xs text-center font-bold transition cursor-pointer"
               >
                 Kasir
               </button>

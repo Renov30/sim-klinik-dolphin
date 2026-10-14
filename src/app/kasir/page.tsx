@@ -373,7 +373,7 @@ function KasirContent() {
                           loadMedicines(e.target.value);
                         }}
                         placeholder="Ketik nama obat atau kode (contoh: Paracetamol, OBT-001)..."
-                        className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium text-sm bg-slate-50 focus:bg-white transition"
+                        className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-medium text-sm bg-slate-50 focus:bg-white transition"
                       />
                       <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
                     </div>
@@ -414,12 +414,12 @@ function KasirContent() {
                         className={`p-4 rounded-2xl border transition flex flex-col justify-between ${
                           isOutOfStock
                             ? 'bg-slate-100/70 border-slate-200 opacity-60'
-                            : 'bg-white border-slate-100 hover:border-blue-300 hover:shadow-xs'
+                            : 'bg-white border-slate-100 hover:border-emerald-300 hover:shadow-xs'
                         }`}
                       >
                         <div>
                           <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+                            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
                               {m.code}
                             </span>
                             <span
@@ -451,8 +451,8 @@ function KasirContent() {
                               isOutOfStock
                                 ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                                 : inCart
-                                ? 'bg-blue-700 text-white shadow-xs'
-                                : 'bg-blue-600 hover:bg-blue-700 text-white shadow-xs'
+                                ? 'bg-emerald-700 text-white shadow-xs'
+                                : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs'
                             }`}
                           >
                             <Plus className="w-3 h-3" />
@@ -665,9 +665,9 @@ function KasirContent() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-950">
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950">
                   <span className="font-bold text-sm uppercase">Total Tagihan:</span>
-                  <span className="font-black text-2xl text-blue-600">
+                  <span className="font-black text-2xl text-emerald-700">
                     {formatRupiah(totalAmount)}
                   </span>
                 </div>
@@ -688,7 +688,7 @@ function KasirContent() {
                         }}
                         className={`py-2 px-2 rounded-xl text-center font-bold text-xs transition border cursor-pointer ${
                           paymentMethod === method
-                            ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                            ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
                             : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                         }`}
                       >
@@ -708,7 +708,7 @@ function KasirContent() {
                       <button
                         type="button"
                         onClick={() => handlePresetPay('PAS')}
-                        className="text-xs text-blue-600 font-bold hover:underline cursor-pointer"
+                        className="text-xs text-emerald-700 font-bold hover:underline cursor-pointer"
                       >
                         Uang Pas
                       </button>
@@ -719,7 +719,7 @@ function KasirContent() {
                       value={payAmount || ''}
                       onChange={(e) => setPayAmount(parseFloat(e.target.value) || 0)}
                       placeholder="Masukkan nominal bayar..."
-                      className="w-full px-3.5 py-2 text-base font-bold rounded-xl border border-slate-200/90 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800"
+                      className="w-full px-3.5 py-2 text-base font-bold rounded-xl border border-slate-200/90 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-slate-800"
                     />
 
                     {/* Quick presets */}
@@ -755,7 +755,7 @@ function KasirContent() {
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Contoh: Pembelian obat bebas tanpa resep"
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200/90 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200/90 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -765,7 +765,7 @@ function KasirContent() {
                 type="button"
                 disabled={processing || cart.length === 0}
                 onClick={handleCheckout}
-                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm tracking-wide shadow-md shadow-blue-500/25 transition disabled:opacity-50 cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm tracking-wide shadow-md shadow-emerald-500/25 transition disabled:opacity-50 cursor-pointer"
               >
                 <CreditCard className="w-4 h-4" />
                 <span>{processing ? 'Memproses Transaksi...' : 'Proses Pembayaran & Cetak Struk'}</span>
@@ -893,7 +893,7 @@ function KasirContent() {
               <button
                 type="button"
                 onClick={handlePrint}
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold tracking-wide shadow-sm transition cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold tracking-wide shadow-sm transition cursor-pointer"
               >
                 <Printer className="w-4 h-4" />
                 <span>Cetak Struk</span>

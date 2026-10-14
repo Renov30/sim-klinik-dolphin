@@ -113,7 +113,7 @@ export default function TransaksiPage() {
           {/* Stat metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
                 <Receipt className="w-6 h-6" />
               </div>
               <div>
@@ -121,7 +121,7 @@ export default function TransaksiPage() {
                   Total Transaksi
                 </span>
                 <p className="text-2xl font-black text-slate-800 tracking-tight mt-0.5">{sales.length} Faktur</p>
-                <span className="text-xs text-blue-600 font-semibold">
+                <span className="text-xs text-emerald-600 font-semibold">
                   Tercatat di PostgreSQL
                 </span>
               </div>
@@ -173,7 +173,7 @@ export default function TransaksiPage() {
                   loadSales(e.target.value);
                 }}
                 placeholder="Cari Nomor Faktur (contoh: INV-20261014) atau Nama Pasien..."
-                className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium text-sm bg-slate-50 focus:bg-white transition"
+                className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-medium text-sm bg-slate-50 focus:bg-white transition"
               />
               <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
             </div>
@@ -228,8 +228,8 @@ export default function TransaksiPage() {
                   <tbody className="divide-y divide-slate-100 font-medium">
                     {sales.map((sale) => (
                       <tr key={sale.id} className="hover:bg-slate-50/80 transition">
-                        <td className="px-6 py-4 font-bold text-blue-700 whitespace-nowrap">
-                          <span className="px-2.5 py-1 rounded-md bg-blue-50 border border-blue-200 text-xs font-semibold">
+                        <td className="px-6 py-4 font-bold text-emerald-800 whitespace-nowrap">
+                          <span className="px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-200 text-xs font-semibold">
                             {sale.invoiceNumber}
                           </span>
                         </td>
@@ -257,9 +257,9 @@ export default function TransaksiPage() {
                           <button
                             type="button"
                             onClick={() => handleOpenReceipt(sale.id)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold transition cursor-pointer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition cursor-pointer"
                           >
-                            <Printer className="w-3.5 h-3.5 text-blue-600" />
+                            <Printer className="w-3.5 h-3.5 text-emerald-700" />
                             <span>Cetak Struk</span>
                           </button>
                         </td>
@@ -385,7 +385,7 @@ export default function TransaksiPage() {
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold tracking-wide shadow-sm transition cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold tracking-wide shadow-sm transition cursor-pointer"
               >
                 <Printer className="w-4 h-4" />
                 <span>Cetak Ulang Struk</span>

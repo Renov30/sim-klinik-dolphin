@@ -19,7 +19,7 @@ export default async function DashboardLayout({
   const session = await getSession();
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#f1f4f9] font-sans text-slate-800 antialiased selection:bg-blue-500 selection:text-white">
+    <div className="flex h-screen overflow-hidden bg-[#f1f4f9] font-sans text-slate-800 antialiased selection:bg-emerald-600 selection:text-white">
       {/* Sidebar Navigation (Pinned / Fixed in place) */}
       <Sidebar
         clinicName={settings.name}

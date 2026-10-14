@@ -374,7 +374,7 @@ export default function ObatPage() {
           {/* Stat summary cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-xs flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
                 <Pill className="w-6 h-6" />
               </div>
               <div>
@@ -382,7 +382,7 @@ export default function ObatPage() {
                   Total Item Produk
                 </span>
                 <p className="text-2xl font-black text-slate-800 tracking-tight mt-0.5">{medicines.length} Obat</p>
-                <span className="text-xs text-blue-600 font-semibold">
+                <span className="text-xs text-emerald-600 font-semibold">
                   {totalStockUnits} Total Unit Fisik
                 </span>
               </div>
@@ -430,7 +430,7 @@ export default function ObatPage() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Cari nama obat atau kode (contoh: OBT-001, Paracetamol)..."
-                  className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-normal text-sm bg-slate-50 focus:bg-white transition"
+                  className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-normal text-sm bg-slate-50 focus:bg-white transition"
                 />
                 <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
               </div>
@@ -464,7 +464,7 @@ export default function ObatPage() {
                 {userRole === 'ADMIN' && (
                   <button
                     onClick={handleOpenAdd}
-                    className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs tracking-wide shadow-sm hover:shadow cursor-pointer transition"
+                    className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs tracking-wide shadow-sm hover:shadow cursor-pointer transition"
                   >
                     <Plus className="w-4 h-4" />
                     <span>+ Tambah Obat Baru</span>
@@ -479,7 +479,7 @@ export default function ObatPage() {
                 onClick={() => setSelectedCategory('')}
                 className={`px-3.5 py-1.5 rounded-xl whitespace-nowrap transition font-semibold ${
                   selectedCategory === ''
-                    ? 'bg-blue-600 text-white shadow-xs'
+                    ? 'bg-emerald-600 text-white shadow-xs'
                     : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/60'
                 }`}
               >
@@ -491,7 +491,7 @@ export default function ObatPage() {
                   onClick={() => setSelectedCategory(c.id)}
                   className={`px-3.5 py-1.5 rounded-xl whitespace-nowrap transition font-semibold ${
                     selectedCategory === c.id
-                      ? 'bg-blue-600 text-white shadow-xs'
+                      ? 'bg-emerald-600 text-white shadow-xs'
                       : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/60'
                   }`}
                 >
@@ -615,7 +615,7 @@ export default function ObatPage() {
                               {userRole === 'ADMIN' && (
                                 <button
                                   onClick={() => handleOpenEdit(m)}
-                                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-semibold transition cursor-pointer"
+                                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-semibold transition cursor-pointer"
                                 >
                                   <Pencil className="w-3.5 h-3.5" />
                                   <span>Edit</span>

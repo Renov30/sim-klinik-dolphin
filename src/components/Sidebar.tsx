@@ -87,7 +87,7 @@ export default function Sidebar({ clinicName, userRole }: SidebarProps) {
               href={item.href}
               className={`flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-150 ${
                 isActive
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25'
+                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/25'
                   : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >

@@ -62,7 +62,7 @@ export default function TopNavbar({
           <input
             type="text"
             placeholder="Search Here..."
-            className="w-full bg-white border border-slate-200/80 rounded-xl py-2.5 pl-4 pr-10 text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition shadow-xs"
+            className="w-full bg-white border border-slate-200/80 rounded-xl py-2.5 pl-4 pr-10 text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition shadow-xs"
           />
           <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
         </div>
@@ -101,7 +101,7 @@ export default function TopNavbar({
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="flex items-center gap-3 pl-2 p-1 rounded-xl hover:bg-slate-100/60 transition cursor-pointer text-left"
           >
-            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-xs shrink-0 overflow-hidden">
+            <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white font-bold flex items-center justify-center text-sm shadow-xs shrink-0 overflow-hidden">
               <span className="text-base">
                 {userName ? userName.charAt(0).toUpperCase() : 'A'}
               </span>

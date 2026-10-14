@@ -264,7 +264,7 @@ export default function PasienPage() {
                   value={search}
                   onChange={handleSearchChange}
                   placeholder="Cari nama, No. RM (contoh: RM-2610), NIK, atau No. HP..."
-                  className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-normal text-sm bg-slate-50 focus:bg-white transition"
+                  className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-normal text-sm bg-slate-50 focus:bg-white transition"
                 />
                 <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
               </div>
@@ -276,7 +276,7 @@ export default function PasienPage() {
               </span>
               <button
                 onClick={handleOpenAdd}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm tracking-wide shadow-sm hover:shadow transition cursor-pointer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm tracking-wide shadow-sm hover:shadow transition cursor-pointer"
               >
                 <UserPlus className="w-4 h-4" />
                 <span>+ Tambah Pasien Baru</span>
@@ -381,9 +381,9 @@ export default function PasienPage() {
                               </button>
                               <button
                                 onClick={() => handleOpenEdit(p)}
-                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-semibold transition cursor-pointer"
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-semibold transition cursor-pointer"
                               >
-                                <Pencil className="w-3.5 h-3.5 text-blue-600" />
+                                <Pencil className="w-3.5 h-3.5 text-emerald-700" />
                                 <span>Edit</span>
                               </button>
                               <Link
