@@ -363,7 +363,7 @@ export default function ObatPage() {
                 Total Item Produk
               </span>
               <p className="text-2xl font-bold text-slate-800 mt-1">{medicines.length} Obat</p>
-              <span className="text-xs text-blue-600 mt-1 block font-medium">
+              <span className="text-xs text-emerald-700 mt-1 block font-medium">
                 {totalStockUnits} Total Unit Fisik Tersedia
               </span>
             </div>
@@ -400,7 +400,7 @@ export default function ObatPage() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Cari nama obat atau kode (contoh: OBT-001, Paracetamol)..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 font-normal text-sm bg-slate-50 focus:bg-white transition"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-600 font-normal text-sm bg-slate-50 focus:bg-white transition"
                 />
               </div>
 
@@ -431,7 +431,7 @@ export default function ObatPage() {
                 {userRole === 'ADMIN' && (
                   <button
                     onClick={handleOpenAdd}
-                    className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs tracking-wide shadow-sm cursor-pointer transition"
+                    className="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs tracking-wide shadow-sm cursor-pointer transition"
                   >
                     + Tambah Obat Baru
                   </button>
@@ -445,7 +445,7 @@ export default function ObatPage() {
                 onClick={() => setSelectedCategory('')}
                 className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition font-medium ${
                   selectedCategory === ''
-                    ? 'bg-blue-600 text-white font-bold'
+                    ? 'bg-emerald-700 text-white font-bold'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -457,7 +457,7 @@ export default function ObatPage() {
                   onClick={() => setSelectedCategory(c.id)}
                   className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition font-medium ${
                     selectedCategory === c.id
-                      ? 'bg-blue-600 text-white font-bold'
+                      ? 'bg-emerald-700 text-white font-bold'
                       : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
@@ -490,7 +490,7 @@ export default function ObatPage() {
                 {userRole === 'ADMIN' && (
                   <button
                     onClick={handleOpenAdd}
-                    className="px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold"
+                    className="px-4 py-2 rounded-xl bg-emerald-700 text-white text-xs font-bold"
                   >
                     + Tambah Obat Sekarang
                   </button>
@@ -516,9 +516,9 @@ export default function ObatPage() {
                       const isLow = m.stock <= m.minStock;
                       const isOut = m.stock === 0;
                       return (
-                        <tr key={m.id} className="hover:bg-blue-50/40 transition">
-                          <td className="px-6 py-4 font-bold text-blue-700 whitespace-nowrap">
-                            <span className="px-2.5 py-1 rounded-md bg-blue-50 border border-blue-200 text-xs">
+                        <tr key={m.id} className="hover:bg-emerald-50/40 transition">
+                          <td className="px-6 py-4 font-bold text-emerald-800 whitespace-nowrap">
+                            <span className="px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-200 text-xs">
                               {m.code}
                             </span>
                           </td>
@@ -579,7 +579,7 @@ export default function ObatPage() {
                               {userRole === 'ADMIN' && (
                                 <button
                                   onClick={() => handleOpenEdit(m)}
-                                  className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-semibold transition cursor-pointer"
+                                  className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-semibold transition cursor-pointer"
                                 >
                                   Edit
                                 </button>
@@ -634,7 +634,7 @@ export default function ObatPage() {
                     value={addForm.code}
                     onChange={(e) => setAddForm({ ...addForm, code: e.target.value.toUpperCase() })}
                     placeholder="Contoh: OBT-010"
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -646,7 +646,7 @@ export default function ObatPage() {
                     required
                     value={addForm.categoryId}
                     onChange={(e) => setAddForm({ ...addForm, categoryId: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-medium"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-medium"
                   >
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -667,7 +667,7 @@ export default function ObatPage() {
                   value={addForm.name}
                   onChange={(e) => setAddForm({ ...addForm, name: e.target.value })}
                   placeholder="Contoh: Paracetamol 500mg, Amoxicillin 500mg"
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                 />
               </div>
 
@@ -682,7 +682,7 @@ export default function ObatPage() {
                     value={addForm.unit}
                     onChange={(e) => setAddForm({ ...addForm, unit: e.target.value })}
                     placeholder="Strip / Botol / Tablet / Tube"
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-medium"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-medium"
                   />
                 </div>
 
@@ -695,7 +695,7 @@ export default function ObatPage() {
                     min="0"
                     value={addForm.buyPrice}
                     onChange={(e) => setAddForm({ ...addForm, buyPrice: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -709,7 +709,7 @@ export default function ObatPage() {
                     required
                     value={addForm.sellPrice}
                     onChange={(e) => setAddForm({ ...addForm, sellPrice: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-bold text-blue-700"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-bold text-emerald-800"
                   />
                 </div>
               </div>
@@ -724,7 +724,7 @@ export default function ObatPage() {
                     min="0"
                     value={addForm.stock}
                     onChange={(e) => setAddForm({ ...addForm, stock: parseInt(e.target.value, 10) || 0 })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-bold"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-bold"
                   />
                 </div>
 
@@ -737,7 +737,7 @@ export default function ObatPage() {
                     min="0"
                     value={addForm.minStock}
                     onChange={(e) => setAddForm({ ...addForm, minStock: parseInt(e.target.value, 10) || 0 })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -750,7 +750,7 @@ export default function ObatPage() {
                     value={addForm.location}
                     onChange={(e) => setAddForm({ ...addForm, location: e.target.value })}
                     placeholder="Contoh: Rak A-01"
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
               </div>
@@ -766,7 +766,7 @@ export default function ObatPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold tracking-wide shadow transition"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold tracking-wide shadow transition"
                 >
                   {submitting ? 'Menyimpan...' : 'Simpan Master Obat'}
                 </button>
@@ -783,7 +783,7 @@ export default function ObatPage() {
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
               <div>
                 <h3 className="text-lg font-bold text-slate-800">Edit Data Obat</h3>
-                <p className="text-xs text-blue-700 mt-0.5 font-bold">
+                <p className="text-xs text-emerald-800 mt-0.5 font-bold">
                   Kode: {selectedMed.code} • Stok Saat Ini: {selectedMed.stock} {selectedMed.unit}
                 </p>
               </div>
@@ -812,7 +812,7 @@ export default function ObatPage() {
                     required
                     value={editForm.name}
                     onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -823,7 +823,7 @@ export default function ObatPage() {
                   <select
                     value={editForm.categoryId}
                     onChange={(e) => setEditForm({ ...editForm, categoryId: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-medium"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-medium"
                   >
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -844,7 +844,7 @@ export default function ObatPage() {
                     required
                     value={editForm.unit}
                     onChange={(e) => setEditForm({ ...editForm, unit: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-medium"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-medium"
                   />
                 </div>
 
@@ -857,7 +857,7 @@ export default function ObatPage() {
                     min="0"
                     value={editForm.buyPrice}
                     onChange={(e) => setEditForm({ ...editForm, buyPrice: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -871,7 +871,7 @@ export default function ObatPage() {
                     required
                     value={editForm.sellPrice}
                     onChange={(e) => setEditForm({ ...editForm, sellPrice: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-bold text-blue-700"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-bold text-emerald-800"
                   />
                 </div>
               </div>
@@ -886,7 +886,7 @@ export default function ObatPage() {
                     min="0"
                     value={editForm.minStock}
                     onChange={(e) => setEditForm({ ...editForm, minStock: parseInt(e.target.value, 10) || 0 })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -898,7 +898,7 @@ export default function ObatPage() {
                     type="text"
                     value={editForm.location}
                     onChange={(e) => setEditForm({ ...editForm, location: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
               </div>
@@ -914,7 +914,7 @@ export default function ObatPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold tracking-wide shadow transition"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold tracking-wide shadow transition"
                 >
                   {submitting ? 'Menyimpan...' : 'Perbarui Data Obat'}
                 </button>
@@ -943,9 +943,9 @@ export default function ObatPage() {
               </button>
             </div>
 
-            <div className="mb-4 p-3 rounded-xl bg-blue-50 border border-blue-200 text-xs flex justify-between font-medium">
+            <div className="mb-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs flex justify-between font-medium">
               <span>Sisa Stok Sekarang:</span>
-              <strong className="text-blue-800 font-bold">
+              <strong className="text-emerald-900 font-bold">
                 {selectedMed.stock} {selectedMed.unit}
               </strong>
             </div>
@@ -964,7 +964,7 @@ export default function ObatPage() {
                 <select
                   value={stockForm.type}
                   onChange={(e) => setStockForm({ ...stockForm, type: e.target.value as any })}
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-medium"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-medium"
                 >
                   <option value="IN">+ Stok Masuk (Restock / Penerimaan Supplier)</option>
                   <option value="OUT">- Stok Keluar (Kadaluarsa / Rusak / Return)</option>
@@ -982,7 +982,7 @@ export default function ObatPage() {
                   required
                   value={stockForm.quantity}
                   onChange={(e) => setStockForm({ ...stockForm, quantity: parseInt(e.target.value, 10) || 0 })}
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-bold"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-bold"
                 />
               </div>
 
@@ -995,7 +995,7 @@ export default function ObatPage() {
                   value={stockForm.referenceNo}
                   onChange={(e) => setStockForm({ ...stockForm, referenceNo: e.target.value })}
                   placeholder="Contoh: INV-SUPP-9921 / OPNAME-2026"
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                 />
               </div>
 
@@ -1009,7 +1009,7 @@ export default function ObatPage() {
                   value={stockForm.notes}
                   onChange={(e) => setStockForm({ ...stockForm, notes: e.target.value })}
                   placeholder="Catatan alasan perubahan stok"
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                 ></textarea>
               </div>
 
@@ -1055,7 +1055,7 @@ export default function ObatPage() {
 
             <div className="mb-4 flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
               <span className="font-medium text-slate-600">Sisa Stok Fisik Sekarang:</span>
-              <strong className="text-base text-blue-700 font-bold">
+              <strong className="text-base text-emerald-800 font-bold">
                 {selectedMed.stock} {selectedMed.unit}
               </strong>
             </div>
@@ -1089,7 +1089,7 @@ export default function ObatPage() {
                               h.type === 'IN'
                                 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                                 : h.type === 'SALE'
-                                ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                                 : 'bg-rose-50 text-rose-700 border border-rose-200'
                             }`}
                           >
@@ -1100,7 +1100,7 @@ export default function ObatPage() {
                           {h.quantity > 0 ? `+${h.quantity}` : h.quantity}
                         </td>
                         <td className="px-4 py-2.5 whitespace-nowrap text-slate-800">
-                          {h.balanceBefore} &rarr; <strong className="text-blue-700">{h.balanceAfter}</strong>
+                          {h.balanceBefore} &rarr; <strong className="text-emerald-800">{h.balanceAfter}</strong>
                         </td>
                         <td className="px-4 py-2.5 max-w-xs truncate text-slate-600">
                           {h.referenceNo ? `[${h.referenceNo}] ` : ''}
@@ -1159,7 +1159,7 @@ export default function ObatPage() {
                   value={newCategoryName}
                   onChange={(e) => setNewCategoryName(e.target.value)}
                   placeholder="Contoh: Analgesik, Antipiretik, Salep Mata"
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                 />
               </div>
 
@@ -1172,7 +1172,7 @@ export default function ObatPage() {
                   value={newCategoryDesc}
                   onChange={(e) => setNewCategoryDesc(e.target.value)}
                   placeholder="Keterangan singkat golongan obat"
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                 ></textarea>
               </div>
 
@@ -1186,7 +1186,7 @@ export default function ObatPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold tracking-wide shadow transition"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold tracking-wide shadow transition"
                 >
                   Simpan Kategori
                 </button>

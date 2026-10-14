@@ -247,7 +247,7 @@ export default function PasienPage() {
                 value={search}
                 onChange={handleSearchChange}
                 placeholder="Cari nama, No. RM (contoh: RM-2610), NIK, atau No. HP..."
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 font-normal text-sm bg-slate-50 focus:bg-white transition"
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-600 font-normal text-sm bg-slate-50 focus:bg-white transition"
               />
             </div>
 
@@ -257,7 +257,7 @@ export default function PasienPage() {
               </span>
               <button
                 onClick={handleOpenAdd}
-                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm tracking-wide shadow-sm hover:shadow transition cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm tracking-wide shadow-sm hover:shadow transition cursor-pointer"
               >
                 + Tambah Pasien Baru
               </button>
@@ -286,7 +286,7 @@ export default function PasienPage() {
                 </p>
                 <button
                   onClick={handleOpenAdd}
-                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition"
+                  className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition"
                 >
                   + Daftarkan Pasien Sekarang
                 </button>
@@ -309,9 +309,9 @@ export default function PasienPage() {
                     {patients.map((p) => {
                       const age = getAge(p.birthDate);
                       return (
-                        <tr key={p.id} className="hover:bg-blue-50/40 transition">
-                          <td className="px-6 py-4 font-bold text-blue-700 whitespace-nowrap">
-                            <span className="px-2.5 py-1 rounded-md bg-blue-50 border border-blue-200 font-semibold text-xs">
+                        <tr key={p.id} className="hover:bg-emerald-50/30 transition">
+                          <td className="px-6 py-4 font-bold text-emerald-800 whitespace-nowrap">
+                            <span className="px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-200 font-semibold text-xs">
                               {p.mrNumber}
                             </span>
                           </td>
@@ -360,7 +360,7 @@ export default function PasienPage() {
                               </button>
                               <button
                                 onClick={() => handleOpenEdit(p)}
-                                className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-semibold transition cursor-pointer"
+                                className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-semibold transition cursor-pointer"
                               >
                                 Edit
                               </button>
@@ -368,7 +368,7 @@ export default function PasienPage() {
                                 href={`/kasir?patientId=${p.id}&patientName=${encodeURIComponent(
                                   p.name
                                 )}`}
-                                className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold transition"
+                                className="px-3 py-1.5 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-300 font-bold transition"
                               >
                                 Kasir &rarr;
                               </Link>
@@ -419,7 +419,7 @@ export default function PasienPage() {
                   type="text"
                   disabled
                   value="Otomatis Dihasilkan Sistem (Format: RM-YYMM-XXXX)"
-                  className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-100 border border-slate-200 text-blue-700 font-bold"
+                  className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-100 border border-slate-200 text-emerald-800 font-bold"
                 />
               </div>
 
@@ -434,7 +434,7 @@ export default function PasienPage() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Contoh: Budi Santoso"
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -448,7 +448,7 @@ export default function PasienPage() {
                     value={formData.nik}
                     onChange={(e) => setFormData({ ...formData, nik: e.target.value })}
                     placeholder="Contoh: 3171012304900001"
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
               </div>
@@ -461,7 +461,7 @@ export default function PasienPage() {
                   <select
                     value={formData.gender}
                     onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-medium"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-medium"
                   >
                     <option value="L">Laki-laki (L)</option>
                     <option value="P">Perempuan (P)</option>
@@ -477,7 +477,7 @@ export default function PasienPage() {
                     required
                     value={formData.birthDate}
                     onChange={(e) => setFormData({ ...formData, birthDate: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -488,7 +488,7 @@ export default function PasienPage() {
                   <select
                     value={formData.bloodType}
                     onChange={(e) => setFormData({ ...formData, bloodType: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-medium"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-medium"
                   >
                     <option value="A">A</option>
                     <option value="B">B</option>
@@ -509,7 +509,7 @@ export default function PasienPage() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="Contoh: 081234567890"
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -522,7 +522,7 @@ export default function PasienPage() {
                     value={formData.allergy}
                     onChange={(e) => setFormData({ ...formData, allergy: e.target.value })}
                     placeholder="Contoh: Alergi Penisilin, Asam Mefenamat"
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
               </div>
@@ -536,7 +536,7 @@ export default function PasienPage() {
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                   placeholder="Nama jalan, RT/RW, Kelurahan, Kecamatan, Kota"
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                 ></textarea>
               </div>
 
@@ -551,7 +551,7 @@ export default function PasienPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold tracking-wide shadow transition"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold tracking-wide shadow transition"
                 >
                   {submitting ? 'Menyimpan...' : 'Simpan & Terbitkan No. RM'}
                 </button>
@@ -568,7 +568,7 @@ export default function PasienPage() {
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
               <div>
                 <h3 className="text-lg font-bold text-slate-800">Edit Data Pasien</h3>
-                <p className="text-xs text-blue-700 mt-0.5 font-bold">
+                <p className="text-xs text-emerald-800 mt-0.5 font-bold">
                   No. Rekam Medis: {selectedPatient.mrNumber}
                 </p>
               </div>
@@ -597,7 +597,7 @@ export default function PasienPage() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -610,7 +610,7 @@ export default function PasienPage() {
                     maxLength={16}
                     value={formData.nik}
                     onChange={(e) => setFormData({ ...formData, nik: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
               </div>
@@ -623,7 +623,7 @@ export default function PasienPage() {
                   <select
                     value={formData.gender}
                     onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-medium"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-medium"
                   >
                     <option value="L">Laki-laki (L)</option>
                     <option value="P">Perempuan (P)</option>
@@ -639,7 +639,7 @@ export default function PasienPage() {
                     required
                     value={formData.birthDate}
                     onChange={(e) => setFormData({ ...formData, birthDate: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -650,7 +650,7 @@ export default function PasienPage() {
                   <select
                     value={formData.bloodType}
                     onChange={(e) => setFormData({ ...formData, bloodType: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none font-medium"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none font-medium"
                   >
                     <option value="A">A</option>
                     <option value="B">B</option>
@@ -670,7 +670,7 @@ export default function PasienPage() {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
 
@@ -682,7 +682,7 @@ export default function PasienPage() {
                     type="text"
                     value={formData.allergy}
                     onChange={(e) => setFormData({ ...formData, allergy: e.target.value })}
-                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                   />
                 </div>
               </div>
@@ -695,7 +695,7 @@ export default function PasienPage() {
                   rows={2}
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                 ></textarea>
               </div>
 
@@ -710,7 +710,7 @@ export default function PasienPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold tracking-wide shadow transition"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold tracking-wide shadow transition"
                 >
                   {submitting ? 'Menyimpan...' : 'Perbarui Data Pasien'}
                 </button>
@@ -727,7 +727,7 @@ export default function PasienPage() {
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 font-bold border border-blue-200">
+                  <span className="text-xs px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">
                     {selectedPatient.mrNumber}
                   </span>
                   <h3 className="text-lg font-bold text-slate-800">{selectedPatient.name}</h3>

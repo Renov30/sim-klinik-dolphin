@@ -129,7 +129,7 @@ export default function PengaturanPage() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Contoh: Dolphin e-Clinic, Klinik Pratama Sehat"
-                      className="w-full px-3.5 py-2.5 text-sm font-bold text-blue-700 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      className="w-full px-3.5 py-2.5 text-sm font-bold text-emerald-800 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                     />
                     <p className="text-xs text-slate-500 mt-1">
                       Catatan: Nama juga dapat diatur secara statis melalui environment variable{' '}
@@ -146,7 +146,7 @@ export default function PengaturanPage() {
                       required
                       value={formData.tagline}
                       onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
-                      className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                     />
                   </div>
 
@@ -160,7 +160,7 @@ export default function PengaturanPage() {
                         required
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                        className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                       />
                     </div>
 
@@ -173,7 +173,7 @@ export default function PengaturanPage() {
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                        className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                       />
                     </div>
                   </div>
@@ -187,7 +187,7 @@ export default function PengaturanPage() {
                       required
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                      className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                     ></textarea>
                   </div>
 
@@ -201,7 +201,7 @@ export default function PengaturanPage() {
                       value={formData.receiptFooter}
                       onChange={(e) => setFormData({ ...formData, receiptFooter: e.target.value })}
                       placeholder="Contoh: Semoga Lekas Sembuh & Terima Kasih"
-                      className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      className="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:outline-none"
                     />
                   </div>
 
@@ -209,7 +209,7 @@ export default function PengaturanPage() {
                     <button
                       type="submit"
                       disabled={saving}
-                      className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold tracking-wide shadow transition"
+                      className="px-6 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold tracking-wide shadow transition"
                     >
                       {saving ? 'Menyimpan...' : 'Simpan Pengaturan Klinik'}
                     </button>
@@ -242,12 +242,12 @@ export default function PengaturanPage() {
                   Hak Akses Pengguna Sistem (RBAC)
                 </span>
                 <div className="space-y-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-blue-50/70 border border-blue-200 flex items-center justify-between">
+                  <div className="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between">
                     <div>
-                      <p className="font-bold text-blue-900">Administrator</p>
-                      <p className="text-xs text-blue-700">Username: admin</p>
+                      <p className="font-bold text-emerald-950">Administrator</p>
+                      <p className="text-xs text-emerald-800">Username: admin</p>
                     </div>
-                    <span className="px-2 py-0.5 rounded bg-blue-600 text-white text-xs font-semibold">
+                    <span className="px-2 py-0.5 rounded bg-emerald-700 text-white text-xs font-semibold">
                       SEMUA FITUR
                     </span>
                   </div>

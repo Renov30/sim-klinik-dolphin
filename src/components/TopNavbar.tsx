@@ -35,7 +35,7 @@ export default function TopNavbar({
     <header className="bg-white border-b border-slate-200 px-8 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 sticky top-0 z-20">
       <div>
         <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+          <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
             {clinicName}
           </span>
           <span className="text-slate-300 font-bold">/</span>
@@ -57,8 +57,8 @@ export default function TopNavbar({
         </div>
 
         {/* User Pill */}
-        <div className="px-3.5 py-1.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-900 text-xs font-medium flex items-center gap-2">
-          <span className="font-bold text-[11px] bg-blue-600 text-white px-2 py-0.5 rounded">
+        <div className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950 text-xs font-medium flex items-center gap-2">
+          <span className="font-bold text-[11px] bg-emerald-700 text-white px-2 py-0.5 rounded">
             {userRole || 'USER'}
           </span>
           <span className="font-semibold text-slate-700">{userName || 'Pengguna'}</span>

@@ -106,7 +106,7 @@ export default function TransaksiPage() {
                 Total Transaksi
               </span>
               <p className="text-2xl font-bold text-slate-800 mt-1">{sales.length} Faktur</p>
-              <span className="text-xs text-blue-600 mt-1 block font-medium">
+              <span className="text-xs text-emerald-700 mt-1 block font-medium">
                 Tercatat di Database PostgreSQL
               </span>
             </div>
@@ -147,7 +147,7 @@ export default function TransaksiPage() {
                   loadSales(e.target.value);
                 }}
                 placeholder="Cari Nomor Faktur (contoh: INV-20261014) atau Nama Pasien..."
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 font-medium text-sm bg-slate-50 focus:bg-white transition"
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-600 font-medium text-sm bg-slate-50 focus:bg-white transition"
               />
             </div>
 
@@ -199,9 +199,9 @@ export default function TransaksiPage() {
                   </thead>
                   <tbody className="divide-y divide-slate-100 font-medium">
                     {sales.map((sale) => (
-                      <tr key={sale.id} className="hover:bg-blue-50/40 transition">
-                        <td className="px-6 py-4 font-bold text-blue-700 whitespace-nowrap">
-                          <span className="px-2 py-0.5 rounded bg-blue-50 border border-blue-200 text-xs">
+                      <tr key={sale.id} className="hover:bg-emerald-50/30 transition">
+                        <td className="px-6 py-4 font-bold text-emerald-800 whitespace-nowrap">
+                          <span className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-xs">
                             {sale.invoiceNumber}
                           </span>
                         </td>
@@ -229,7 +229,7 @@ export default function TransaksiPage() {
                           <button
                             type="button"
                             onClick={() => handleOpenReceipt(sale.id)}
-                            className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold transition"
+                            className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition"
                           >
                             Cetak Struk
                           </button>
@@ -327,7 +327,7 @@ export default function TransaksiPage() {
                 )}
                 <div className="flex justify-between font-bold text-sm pt-1 border-t border-slate-200">
                   <span>TOTAL:</span>
-                  <span className="text-blue-700">{formatRupiah(selectedSale.totalAmount)}</span>
+                  <span className="text-emerald-800">{formatRupiah(selectedSale.totalAmount)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-600">Bayar ({selectedSale.paymentMethod}):</span>
@@ -356,7 +356,7 @@ export default function TransaksiPage() {
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold tracking-wide shadow transition"
+                className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold tracking-wide shadow transition"
               >
                 Cetak Ulang Struk
               </button>

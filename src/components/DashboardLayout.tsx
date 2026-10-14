@@ -20,7 +20,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen bg-slate-50 font-sans text-slate-800">
-      {/* Vibe Coded Deep Blue Sidebar */}
+      {/* Sidebar Navigation */}
       <Sidebar
         clinicName={settings.name}
         userRole={session?.role}

@@ -353,7 +353,7 @@ function KasirContent() {
                         loadMedicines(e.target.value);
                       }}
                       placeholder="Ketik nama obat atau kode (contoh: Paracetamol, OBT-001)..."
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600 font-medium text-sm bg-slate-50 focus:bg-white transition"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-600 font-medium text-sm bg-slate-50 focus:bg-white transition"
                     />
                   </div>
                   <button
@@ -392,12 +392,12 @@ function KasirContent() {
                         className={`p-4 rounded-2xl border transition flex flex-col justify-between ${
                           isOutOfStock
                             ? 'bg-slate-100/70 border-slate-200 opacity-60'
-                            : 'bg-white border-slate-200/90 hover:border-blue-300 hover:shadow-sm'
+                            : 'bg-white border-slate-200/90 hover:border-emerald-300 hover:shadow-sm'
                         }`}
                       >
                         <div>
                           <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+                            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
                               {m.code}
                             </span>
                             <span
@@ -429,8 +429,8 @@ function KasirContent() {
                               isOutOfStock
                                 ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                                 : inCart
-                                ? 'bg-blue-700 text-white shadow-xs'
-                                : 'bg-blue-600 hover:bg-blue-700 text-white shadow-xs'
+                                ? 'bg-emerald-800 text-white shadow-xs'
+                                : 'bg-emerald-700 hover:bg-emerald-800 text-white shadow-xs'
                             }`}
                           >
                             {inCart ? `+ (${inCart.quantity})` : '+ Keranjang'}
@@ -481,7 +481,7 @@ function KasirContent() {
                             setCustomerName('Pasien Umum');
                           }
                         }}
-                        className="rounded text-blue-600 focus:ring-blue-500"
+                        className="rounded text-emerald-700 focus:ring-emerald-500"
                       />
                       <span>Pasien Terdaftar RM</span>
                     </label>
@@ -509,10 +509,10 @@ function KasirContent() {
                           <div
                             key={p.id}
                             onClick={() => handleSelectPatient(p)}
-                            className="p-2.5 text-xs hover:bg-blue-50 cursor-pointer"
+                            className="p-2.5 text-xs hover:bg-emerald-50 cursor-pointer"
                           >
                             <p className="font-bold text-slate-800">
-                              {p.name} <span className="text-blue-700 font-semibold">({p.mrNumber})</span>
+                              {p.name} <span className="text-emerald-800 font-semibold">({p.mrNumber})</span>
                             </p>
                             {p.allergy && (
                               <p className="text-xs text-rose-600 mt-0.5">
@@ -525,10 +525,10 @@ function KasirContent() {
                     )}
 
                     {selectedPatient && (
-                      <div className="mt-2 p-2.5 rounded-lg bg-blue-50/80 border border-blue-200 text-xs">
+                      <div className="mt-2 p-2.5 rounded-lg bg-emerald-50/80 border border-emerald-200 text-xs">
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-blue-900">{selectedPatient.name}</span>
-                          <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded font-semibold">
+                          <span className="font-bold text-emerald-950">{selectedPatient.name}</span>
+                          <span className="text-xs bg-emerald-700 text-white px-2 py-0.5 rounded font-semibold">
                             {selectedPatient.mrNumber}
                           </span>
                         </div>
@@ -567,7 +567,7 @@ function KasirContent() {
                     >
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-1.5">
-                          <span className="text-xs text-blue-700 font-semibold">
+                          <span className="text-xs text-emerald-800 font-semibold">
                             {item.code}
                           </span>
                           <h5 className="font-bold text-slate-800 text-xs truncate">
@@ -642,9 +642,9 @@ function KasirContent() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-950">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950">
                   <span className="font-bold text-sm uppercase">Total Tagihan:</span>
-                  <span className="font-bold text-xl text-blue-700">
+                  <span className="font-bold text-xl text-emerald-800">
                     {formatRupiah(totalAmount)}
                   </span>
                 </div>
@@ -665,7 +665,7 @@ function KasirContent() {
                         }}
                         className={`py-1.5 px-2 rounded-xl text-center font-semibold text-xs transition border ${
                           paymentMethod === method
-                            ? 'bg-blue-600 text-white border-blue-700'
+                            ? 'bg-emerald-700 text-white border-emerald-800'
                             : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
                         }`}
                       >
@@ -685,7 +685,7 @@ function KasirContent() {
                       <button
                         type="button"
                         onClick={() => handlePresetPay('PAS')}
-                        className="text-xs text-blue-600 font-semibold hover:underline"
+                        className="text-xs text-emerald-700 font-semibold hover:underline"
                       >
                         Uang Pas
                       </button>
@@ -696,7 +696,7 @@ function KasirContent() {
                       value={payAmount || ''}
                       onChange={(e) => setPayAmount(parseFloat(e.target.value) || 0)}
                       placeholder="Masukkan nominal bayar..."
-                      className="w-full px-3 py-2 text-base font-bold rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-slate-800"
+                      className="w-full px-3 py-2 text-base font-bold rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 text-slate-800"
                     />
 
                     {/* Quick presets */}
@@ -838,7 +838,7 @@ function KasirContent() {
                 )}
                 <div className="flex justify-between font-bold text-sm pt-1 border-t border-slate-200">
                   <span>TOTAL:</span>
-                  <span className="text-blue-700">{formatRupiah(receiptData.totalAmount)}</span>
+                  <span className="text-emerald-800">{formatRupiah(receiptData.totalAmount)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-600">Bayar ({receiptData.paymentMethod}):</span>
@@ -869,7 +869,7 @@ function KasirContent() {
               <button
                 type="button"
                 onClick={handlePrint}
-                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold tracking-wide shadow transition"
+                className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold tracking-wide shadow transition"
               >
                 Cetak Struk
               </button>
