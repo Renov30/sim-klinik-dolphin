@@ -765,7 +765,7 @@ function KasirContent() {
                 type="button"
                 disabled={processing || cart.length === 0}
                 onClick={handleCheckout}
-                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm tracking-wide shadow-md shadow-emerald-500/25 transition disabled:opacity-50 cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm tracking-wide shadow-xs hover:shadow-sm transition disabled:opacity-50 cursor-pointer"
               >
                 <CreditCard className="w-4 h-4" />
                 <span>{processing ? 'Memproses Transaksi...' : 'Proses Pembayaran & Cetak Struk'}</span>

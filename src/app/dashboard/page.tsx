@@ -90,16 +90,13 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <DashboardLayout
-      title="Dashboard"
-      subtitle="Ringkasan eksekutif transaksi, rekam medis pasien, dan pergerakan stok farmasi"
-    >
+    <DashboardLayout title="Dashboard">
       <div className="space-y-6 pb-6">
         {/* ROW 1: 4 VIBRANT METRIC CARDS (Exact match to reference design) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* Card 1: Emerald Green */}
-          <div className="relative overflow-hidden rounded-2xl bg-[#00c982] text-white p-5 shadow-sm transition hover:shadow-md">
-            <div className="flex items-center gap-3 mb-3">
+          {/* Card 1: Total Pasien */}
+          <div className="rounded-2xl bg-emerald-600 text-white p-5 shadow-xs transition hover:bg-emerald-700">
+            <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
                 <Users className="w-5 h-5 text-white" />
               </div>
@@ -112,13 +109,11 @@ export default async function DashboardPage() {
                 </p>
               </div>
             </div>
-            {/* Watermark decorative circle */}
-            <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/15 pointer-events-none" />
           </div>
 
-          {/* Card 2: Sky Blue */}
-          <div className="relative overflow-hidden rounded-2xl bg-[#00a8ff] text-white p-5 shadow-sm transition hover:shadow-md">
-            <div className="flex items-center gap-3 mb-3">
+          {/* Card 2: Master Obat */}
+          <div className="rounded-2xl bg-emerald-600 text-white p-5 shadow-xs transition hover:bg-emerald-700">
+            <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
                 <Pill className="w-5 h-5 text-white" />
               </div>
@@ -126,18 +121,16 @@ export default async function DashboardPage() {
                 <p className="text-2xl font-black tracking-tight leading-none">
                   {totalMedicines.toLocaleString('id-ID')}
                 </p>
-                <p className="text-xs text-sky-100 font-medium mt-1">
+                <p className="text-xs text-emerald-100 font-medium mt-1">
                   Master Obat
                 </p>
               </div>
             </div>
-            {/* Watermark decorative circle */}
-            <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/15 pointer-events-none" />
           </div>
 
-          {/* Card 3: Amber Yellow */}
-          <div className="relative overflow-hidden rounded-2xl bg-[#ffb703] text-white p-5 shadow-sm transition hover:shadow-md">
-            <div className="flex items-center gap-3 mb-3">
+          {/* Card 3: Transaksi Selesai */}
+          <div className="rounded-2xl bg-emerald-600 text-white p-5 shadow-xs transition hover:bg-emerald-700">
+            <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
                 <Receipt className="w-5 h-5 text-white" />
               </div>
@@ -145,18 +138,16 @@ export default async function DashboardPage() {
                 <p className="text-2xl font-black tracking-tight leading-none">
                   {totalSaleCount.toLocaleString('id-ID')}
                 </p>
-                <p className="text-xs text-amber-100 font-medium mt-1">
+                <p className="text-xs text-emerald-100 font-medium mt-1">
                   Transaksi Selesai
                 </p>
               </div>
             </div>
-            {/* Watermark decorative circle */}
-            <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/15 pointer-events-none" />
           </div>
 
-          {/* Card 4: Coral Red */}
-          <div className="relative overflow-hidden rounded-2xl bg-[#ff5d55] text-white p-5 shadow-sm transition hover:shadow-md">
-            <div className="flex items-center gap-3 mb-3">
+          {/* Card 4: Penerimaan Kasir */}
+          <div className="rounded-2xl bg-emerald-600 text-white p-5 shadow-xs transition hover:bg-emerald-700">
+            <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
                 <Wallet className="w-5 h-5 text-white" />
               </div>
@@ -164,13 +155,11 @@ export default async function DashboardPage() {
                 <p className="text-xl font-black tracking-tight leading-none truncate max-w-[150px]" title={formatRupiah(totalRevenue)}>
                   {formatRupiah(totalRevenue)}
                 </p>
-                <p className="text-xs text-rose-100 font-medium mt-1">
+                <p className="text-xs text-emerald-100 font-medium mt-1">
                   Penerimaan Kasir
                 </p>
               </div>
             </div>
-            {/* Watermark decorative circle */}
-            <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/15 pointer-events-none" />
           </div>
         </div>
 
@@ -430,7 +419,7 @@ export default async function DashboardPage() {
           {/* Col 1: Digital Clinic Virtual Card + Trend Sparkline */}
           <div className="bg-white rounded-2xl p-6 border border-slate-100/90 shadow-xs flex flex-col justify-between">
             {/* Visual Credit Card */}
-            <div className="w-full rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-emerald-800 text-white p-5 shadow-md shadow-emerald-500/20 relative overflow-hidden">
+            <div className="w-full rounded-2xl bg-emerald-700 text-white p-5 shadow-xs relative overflow-hidden">
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <span className="text-xs text-emerald-100 block font-medium">Balance</span>
@@ -454,8 +443,8 @@ export default async function DashboardPage() {
                 </div>
                 {/* Mastercard Overlapping Circles */}
                 <div className="flex items-center -space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-white/40"></div>
-                  <div className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-xs"></div>
+                  <div className="w-8 h-8 rounded-full bg-white/30"></div>
+                  <div className="w-8 h-8 rounded-full bg-white/20"></div>
                 </div>
               </div>
             </div>

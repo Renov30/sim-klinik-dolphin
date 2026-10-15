@@ -114,7 +114,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm tracking-wide shadow-md shadow-emerald-500/25 hover:shadow-lg transition cursor-pointer disabled:opacity-50"
+              className="w-full mt-2 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm tracking-wide shadow-xs hover:shadow-sm transition cursor-pointer disabled:opacity-50"
             >
               <span>{loading ? 'Memverifikasi...' : 'Masuk ke Sistem'}</span>
               <ArrowRight className="w-4 h-4" />

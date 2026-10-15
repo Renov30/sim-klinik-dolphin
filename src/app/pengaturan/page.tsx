@@ -239,7 +239,7 @@ export default function PengaturanPage() {
                     <button
                       type="submit"
                       disabled={saving}
-                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold tracking-wide shadow-md shadow-emerald-500/20 transition cursor-pointer"
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold tracking-wide shadow-xs hover:shadow-sm transition cursor-pointer"
                     >
                       <Save className="w-4 h-4" />
                       <span>{saving ? 'Menyimpan...' : 'Simpan Pengaturan Klinik'}</span>

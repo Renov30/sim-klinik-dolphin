@@ -56,17 +56,6 @@ export default function TopNavbar({
         </div>
       </div>
 
-      {/* Center Search Pill */}
-      <div className="flex-1 max-w-md mx-auto hidden lg:block">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search Here..."
-            className="w-full bg-white border border-slate-200/80 rounded-xl py-2.5 pl-4 pr-10 text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition shadow-xs"
-          />
-          <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
-        </div>
-      </div>
 
       {/* Right Actions: Notifications & User Profile */}
       <div className="flex items-center gap-4">
@@ -90,7 +79,7 @@ export default function TopNavbar({
         >
           <Mail className="w-4 h-4" />
           <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-400 text-white text-[10px] font-bold flex items-center justify-center border-2 border-white">
-            23
+            2
           </span>
         </button>
 
@@ -109,7 +98,7 @@ export default function TopNavbar({
             <div className="hidden sm:block text-left">
               <div className="flex items-center gap-1.5">
                 <span className="text-sm font-bold text-slate-800 leading-tight">
-                  Hi {userName || 'User'}
+                  {userName || 'User'}
                 </span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 text-slate-400 transition-transform ${
